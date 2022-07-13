@@ -1,0 +1,38 @@
+name: my_grab
+version: 1.0.0+1
+publish_to: none
+description: A new Flutter project.
+environment: 
+  sdk: '>=2.17.1 <3.0.0'
+
+dependencies: 
+  cupertino_icons: ^1.0.2
+  get_cli: ^1.8.1
+  get: 4.6.5
+  flutter: 
+    sdk: flutter
+  flutter_carousel_slider: ^1.0.9
+  animated_splash_screen: ^1.3.0
+  dio: ^4.0.6
+  flutter_polyline_points: ^1.0.0
+  google_maps_flutter: ^2.1.8
+  geolocator: ^9.0.0
+  geocoding: ^2.0.4
+  avatar_glow: ^2.0.2
+  flutter_easyloading: ^3.0.5
+  flutter_secure_storage: ^5.0.2
+
+dev_dependencies: 
+  flutter_lints: ^2.0.0
+  flutter_test: 
+    sdk: flutter
+
+
+flutter: 
+  uses-material-design: true
+
+  assets:
+    - assets/
+    - assets/main_icon/
+    - assets/main_banner/
+    - assets/main_banner_2/
