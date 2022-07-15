@@ -20,6 +20,8 @@ import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 import '../modules/user/bindings/user_binding.dart';
 import '../modules/user/views/user_view.dart';
+import '../modules/voucher/bindings/voucher_binding.dart';
+import '../modules/voucher/views/voucher_view.dart';
 import '../modules/welcome/bindings/welcome_binding.dart';
 import '../modules/welcome/views/welcome_view.dart';
 
@@ -57,13 +59,10 @@ class AppPages {
       binding: PasswordLoginBinding(),
     ),
     GetPage(
-      name: _Paths.SPLASH,
-      page: () => const SplashView(),
-      binding: SplashBinding(),
-      bindings: [
-        HomeBinding()
-      ]
-    ),
+        name: _Paths.SPLASH,
+        page: () => const SplashView(),
+        binding: SplashBinding(),
+        bindings: [HomeBinding()]),
     GetPage(
         name: _Paths.HOME,
         page: () => const HomeView(),
@@ -71,11 +70,10 @@ class AppPages {
     GetPage(
         name: _Paths.FIND_TRANSPORTATION,
         page: () => const FindTransportationView(),
-        binding: FindTransportationBinding()),
+        binding: FindTransportationBinding(),
+        bindings: [UserBinding()]),
     GetPage(
-        name: _Paths.MAP,
-        page: () => const MapView(),
-        binding: MapBinding()),
+        name: _Paths.MAP, page: () => const MapView(), binding: MapBinding()),
     GetPage(
       name: _Paths.SEARCH_PAGE,
       page: () => const SearchPageView(),
@@ -85,6 +83,11 @@ class AppPages {
       name: _Paths.USER,
       page: () => const UserView(),
       binding: UserBinding(),
+    ),
+    GetPage(
+      name: _Paths.VOUCHER,
+      page: () => const VoucherView(),
+      binding: VoucherBinding(),
     ),
   ];
 }

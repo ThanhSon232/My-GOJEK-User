@@ -67,7 +67,8 @@ class MapController extends GetxController {
         myLocation = Get.arguments["location"];
         await getAddress(
             myLocation!.location!.lat!, myLocation!.location!.lng!);
-        await myLocationMarker("1", myLocation?.location, searchPageController.myLocationController);
+        await myLocationMarker("1", myLocation?.location,
+            searchPageController.myLocationController);
         types = TYPES.SELECTLOCATION;
       } else {
         if (Get.arguments["location"] != null &&
@@ -75,18 +76,18 @@ class MapController extends GetxController {
           isShow = true;
           from = Get.arguments["location"];
           text.value = "Set destination";
-          await myLocationMarker("2", to,  searchPageController.destinationController);
+          await myLocationMarker(
+              "2", to, searchPageController.destinationController);
           types = TYPES.SELECTEVIAMAP;
         } else {
           isShow = true;
-          searchingLocation =  Get.arguments["destination"];
+          searchingLocation = Get.arguments["destination"];
           text.value = "Set pickup location";
           from = searchPageController.currentLocation;
-          await myLocationMarker("1", from,  searchPageController.myLocationController);
+          await myLocationMarker(
+              "1", from, searchPageController.myLocationController);
           types = TYPES.SELECTDESTINATION;
         }
-
-
       }
     }
 
@@ -117,7 +118,7 @@ class MapController extends GetxController {
         "${temp.name} ${temp.subLocality} ${temp.subAdministrativeArea} ${temp.locality}  ${temp.country}";
   }
 
-  myLocationMarker(String id, Location? l, TextEditingController t) async{
+  myLocationMarker(String id, Location? l, TextEditingController t) async {
     await getAddress(l?.lat!, l?.lng!);
     t.text = address.value;
     final Marker marker = Marker(
@@ -126,7 +127,9 @@ class MapController extends GetxController {
         onDrag: (position) {
           isDragging.value = true;
         },
-        icon: id == "2" ? BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue) : BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+        icon: id == "2"
+            ? BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue)
+            : BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
         onDragEnd: ((newPosition) async {
           isDragging.value = false;
           l?.setLocation(newPosition);
@@ -136,14 +139,9 @@ class MapController extends GetxController {
         position: LatLng(
             l?.lat ?? findTransportationController.map.position.latitude,
             l?.lng ?? findTransportationController.map.position.longitude));
-    googleMapController.animateCamera(
-        CameraUpdate.newCameraPosition(
-          CameraPosition(
-              target: LatLng(
-                  l!.lat!,
-                  l!.lng!),
-              zoom: 15),
-        ));
+    googleMapController.animateCamera(CameraUpdate.newCameraPosition(
+      CameraPosition(target: LatLng(l!.lat!, l!.lng!), zoom: 15),
+    ));
     markers[MarkerId(id)] = marker;
   }
 
@@ -174,11 +172,45 @@ class MapController extends GetxController {
         LatLng(position.target.latitude, position.target.longitude);
     markers[markerId] = Marker(markerId: markerId, position: newMarkerPosition);
   }
+
+  void handleSearch() async {
+    if (types == TYPES.SELECTLOCATION) {
+      text.value = "Set pickup location";
+      searchPageController.currentLocation = myLocation!.location!;
+      searchPageController.myLocationController.text = address.value;
+      searchPageController.location.clear();
+      Get.back();
+    } else if (types == TYPES.SELECTDESTINATION) {
+      text.value = "Set up destination";
+      await myLocationMarker("2", searchingLocation?.location,
+          searchPageController.destinationController);
+      to = searchingLocation?.location;
+      types = TYPES.HASBOTH;
+    } else if (types == TYPES.SELECTEVIAMAP) {
+      text.value = "Set pickup location";
+      await myLocationMarker(
+          "1", from, searchPageController.myLocationController);
+      types = TYPES.HASBOTH;
+    } else if (types == TYPES.HASBOTH) {
+      route(from, to);
+      pass.value = true;
+    }
+  }
+
+  Future<void> handleMyLocationButton() async{
+    await getCurrentPosition();
+    googleMapController.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+            target: LatLng(
+                findTransportationController
+                    .position.value["latitude"],
+                findTransportationController
+                    .position.value["longitude"]),
+            zoom: 15),
+      ),
+    );
+  }
 }
 
-enum TYPES{
-  SELECTLOCATION,
-  SELECTEVIAMAP,
-  SELECTDESTINATION,
-  HASBOTH
-}
+enum TYPES { SELECTLOCATION, SELECTEVIAMAP, SELECTDESTINATION, HASBOTH }

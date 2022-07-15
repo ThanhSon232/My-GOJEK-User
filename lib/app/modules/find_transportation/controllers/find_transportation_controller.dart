@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:my_grab/app/modules/user/controllers/user_controller.dart';
 
 import '../../../data/common/google_map.dart';
 
@@ -12,8 +13,8 @@ class FindTransportationController extends GetxController {
   var showMap = false.obs;
   var isLoading = false.obs;
   Maps map = Maps();
+  var userController = Get.find<UserController>();
   ScrollController scrollController = ScrollController(initialScrollOffset: 1);
-  // var passwordController = Get.find<PasswordLoginController>().passwordController.text;
 
   @override
   void onInit() async{

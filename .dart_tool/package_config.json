@@ -692,6 +692,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "ticket_widget",
+      "rootUri": "file:///Users/thanhson/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/ticket_widget-0.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
       "name": "timing",
       "rootUri": "file:///Users/thanhson/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/timing-1.0.0",
       "packageUri": "lib/",
@@ -758,7 +764,7 @@
       "languageVersion": "2.17"
     }
   ],
-  "generated": "2022-07-15T02:03:19.252172Z",
+  "generated": "2022-07-15T06:55:01.581451Z",
   "generator": "pub",
   "generatorVersion": "2.17.1"
 }

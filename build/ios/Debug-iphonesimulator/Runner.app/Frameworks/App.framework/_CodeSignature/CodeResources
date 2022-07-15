@@ -10,7 +10,7 @@
 		</data>
 		<key>flutter_assets/AssetManifest.json</key>
 		<data>
-		nDiFpvJ/cJErjFjecFDF6u5oWAk=
+		YLF+eL3LJ8931skmXJVpnP7EemY=
 		</data>
 		<key>flutter_assets/FontManifest.json</key>
 		<data>
@@ -18,7 +18,7 @@
 		</data>
 		<key>flutter_assets/NOTICES.Z</key>
 		<data>
-		t05bxO0AXir1FNmYy2l3djVhVNg=
+		k0dTwvO5bDg7ZGynu2K1VvN6qY0=
 		</data>
 		<key>flutter_assets/assets/.DS_Store</key>
 		<data>
@@ -43,6 +43,10 @@
 		<key>flutter_assets/assets/banner3.png</key>
 		<data>
 		6fXnvptTH9Ut9zH7XEdYLTKAtS4=
+		</data>
+		<key>flutter_assets/assets/cash_icon.jpeg</key>
+		<data>
+		MYZJgmAdmV0L8/K084xnoQE00G8=
 		</data>
 		<key>flutter_assets/assets/destination.png</key>
 		<data>
@@ -158,7 +162,7 @@
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
-		iJ474x27S6U5/EWAj8f1zaJBz6c=
+		L9qQ1gidO727pl652godyOWdkoM=
 		</data>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -175,11 +179,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			nDiFpvJ/cJErjFjecFDF6u5oWAk=
+			YLF+eL3LJ8931skmXJVpnP7EemY=
 			</data>
 			<key>hash2</key>
 			<data>
-			jTrYvs/eaey4MzZ3d/D0jdKhtCknbw6FQEm3tWm4neQ=
+			AkGVG1na+lCMdqb9m+gsm0CfkbUC5gMydKO2wHPPTGY=
 			</data>
 		</dict>
 		<key>flutter_assets/FontManifest.json</key>
@@ -197,11 +201,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			t05bxO0AXir1FNmYy2l3djVhVNg=
+			k0dTwvO5bDg7ZGynu2K1VvN6qY0=
 			</data>
 			<key>hash2</key>
 			<data>
-			ZY00m/pN7poG/EF2K1UoyiKwuaLXK0rX6y8yyfTWhE4=
+			8Aq0uC8a+TZMT7y350k03s1hW5Lu3u6WxxFi3Zk3KJs=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/background_find_transportation.png</key>
@@ -257,6 +261,17 @@
 			<key>hash2</key>
 			<data>
 			HWtD5yMludeafzEcBuXIcSfmADos9rEDepyXV8Ag9Dw=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/cash_icon.jpeg</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			MYZJgmAdmV0L8/K084xnoQE00G8=
+			</data>
+			<key>hash2</key>
+			<data>
+			AIj7lDCR0siGXiYWjTAMSI9gZ7z7qPgl4ejWJ1R1HAU=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/destination.png</key>
@@ -560,11 +575,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			iJ474x27S6U5/EWAj8f1zaJBz6c=
+			L9qQ1gidO727pl652godyOWdkoM=
 			</data>
 			<key>hash2</key>
 			<data>
-			+iqfeyy4rIQ+QlSMHCsmGZF1lt/b7Oq+qn09eelAqM8=
+			x6unq0pbCKlOpexKpayWlN0VNpatAs4Aiqu9cqfr5DY=
 			</data>
 		</dict>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>

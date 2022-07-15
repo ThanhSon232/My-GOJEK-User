@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:my_grab/app/data/common/bottom_sheets.dart';
 
+import '../../../routes/app_pages.dart';
 import '../controllers/map_controller.dart';
 
 class MapView extends GetView<MapController> {
@@ -12,9 +14,6 @@ class MapView extends GetView<MapController> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final textTheme = Theme.of(context).textTheme;
-    const h_2 = SizedBox(
-      height: 20,
-    );
     return Scaffold(
         body: Obx(
           () => GoogleMap(
@@ -48,50 +47,16 @@ class MapView extends GetView<MapController> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white,
-                          border: Border.all(color: Colors.grey[300]!)),
-                      child: IconButton(
-                        icon: const Icon(
-                          Icons.arrow_back,
-                          color: Colors.black,
-                        ),
-                        onPressed: () {
-                          Get.back();
-                        },
-                      )),
-                  Container(
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white,
-                          border: Border.all(color: Colors.grey[300]!)),
-                      child: IconButton(
-                        icon: const Icon(
-                          Icons.navigation,
-                          color: Colors.black,
-                        ),
-                        onPressed: () async {
-                          await controller.getCurrentPosition();
-                          // await controller.getCurrentAddress();
-                          controller.googleMapController.animateCamera(
-                            CameraUpdate.newCameraPosition(
-                              CameraPosition(
-                                  target: LatLng(
-                                      controller.findTransportationController
-                                          .position.value["latitude"],
-                                      controller.findTransportationController
-                                          .position.value["longitude"]),
-                                  zoom: 15),
-                            ),
-                          );
-                        },
-                      )),
+                  roundedButton(
+                      icon: Icons.arrow_back,
+                      f: () {
+                        Get.back();
+                      }),
+                  roundedButton(
+                      icon: Icons.navigation,
+                      f: () async {
+                        await controller.handleMyLocationButton();
+                      })
                 ],
               ),
             ),
@@ -100,133 +65,199 @@ class MapView extends GetView<MapController> {
             ),
             Obx(
               () => AnimatedContainer(
-                height: controller.pass.value ? height * 0.4 : height * 0.3,
-                width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.symmetric(
-                    vertical: 20, horizontal: !controller.pass.value ? 10 : 0),
-                margin: EdgeInsets.zero,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20)),
-                    border: Border.all(color: Colors.grey[300]!)),
-                duration: const Duration(milliseconds: 500),
-                child: controller.isDragging.value
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : controller.pass.value
-                        ? Scaffold(
-                            body: ListView.builder(
-                                itemCount: 3,
-                                itemBuilder: (context, itemBuilder) {
-                                  return ListTile(
-                                    leading: Text(itemBuilder.toString()),
-                                    onTap: () {},
-                                  );
-                                }),
-                            bottomSheet: SizedBox(
-                              height: Get.height * 0.15,
-                              width: Get.width,
-                              child: Card(
-                                color: Colors.grey[100],
-                                elevation: 20,
-                              ),
-                            ),
-                          )
-                        : Wrap(
-                            spacing: 10,
-                            children: [
-                              Obx(
-                                () => Text(
-                                  controller.text.value,
-                                  style: textTheme.headline1?.copyWith(
-                                      color: Colors.green, fontSize: 15),
+                  height: controller.pass.value ? height * 0.4 : height * 0.3,
+                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.symmetric(
+                      vertical: 20,
+                      horizontal: !controller.pass.value ? 10 : 0),
+                  margin: EdgeInsets.zero,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey[400]!,
+                          offset: const Offset(0.0, -2.5), //(x,y)
+                          blurRadius: 10.0,
+                        ),
+                      ],
+                      borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20)),
+                      border: Border.all(color: Colors.grey[300]!)),
+                  duration: const Duration(milliseconds: 500),
+                  child: controller.isDragging.value
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : controller.pass.value
+                          ? Scaffold(
+                              body: ListView.builder(
+                                  itemCount: 3,
+                                  itemBuilder: (context, itemBuilder) {
+                                    return ListTile(
+                                      leading: Text(itemBuilder.toString()),
+                                      onTap: () {},
+                                    );
+                                  }),
+                              bottomSheet: Container(
+                                height: Get.height * 0.14,
+                                width: Get.width,
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey[200]!,
+                                        offset: const Offset(0.0, -2.5), //(x,y)
+                                        blurRadius: 3.0,
+                                      ),
+                                    ],
+                                    color: Colors.white,
+                                    border: const Border(
+                                      top: BorderSide(
+                                        //
+                                        color: Colors.black,
+                                        width: 0.1,
+                                      ),
+                                    )),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            showPaymentMethod(
+                                                context: context,
+                                                height: Get.height * 0.95);
+                                          },
+                                          child: Row(
+                                            children: [
+                                              Image.asset(
+                                                "assets/cash_icon.jpeg",
+                                                height: 15,
+                                              ),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(
+                                                "Cash >",
+                                                style: textTheme.headline1!
+                                                    .copyWith(fontSize: 13),
+                                              ),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                            width: 100,
+                                            child: ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                    shape: const StadiumBorder(
+                                                      side: BorderSide(
+                                                        color: Colors.green,
+                                                      ),
+                                                    ),
+                                                    primary: Colors.white,
+                                                    elevation: 0),
+                                                onPressed: () {
+                                                  Get.toNamed(Routes.VOUCHER);
+                                                },
+                                                child: Text(
+                                                  "Voucher",
+                                                  style: textTheme.headline2,
+                                                )))
+                                      ],
+                                    ),
+                                    const Spacer(),
+                                    SizedBox(
+                                        width: double.infinity,
+                                        child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                                primary: Colors.green),
+                                            onPressed: () {},
+                                            child: const Text("Order"))),
+                                  ],
                                 ),
                               ),
-                              h_2,
-                              Text(
-                                controller.address.value,
-                                style: textTheme.headline1,
-                              ),
-                              h_2,
-                              Text(
-                                controller.address.value,
-                                style:
-                                    textTheme.headline2?.copyWith(fontSize: 15),
-                              ),
-                              h_2,
-                              Row(
-                                children: [
-                                  Visibility(
-                                    visible: controller.isShow,
-                                    child: Expanded(
-                                      child: ElevatedButton(
-                                          onPressed: () async {
-                                            if (controller.types ==
-                                                TYPES.SELECTLOCATION) {
-                                              controller.text.value =
-                                                  "Set pickup location";
-                                              controller.searchPageController
-                                                      .currentLocation =
-                                                  controller
-                                                      .myLocation!.location!;
-                                              controller
-                                                      .searchPageController
-                                                      .myLocationController
-                                                      .text =
-                                                  controller.address.value;
-                                              controller
-                                                  .searchPageController.location
-                                                  .clear();
-                                              Get.back();
-                                            } else if (controller.types ==
-                                                TYPES.SELECTDESTINATION) {
-                                              await controller.myLocationMarker(
-                                                  "2",
-                                                  controller.searchingLocation
-                                                      ?.location,
-                                                  controller
-                                                      .searchPageController
-                                                      .destinationController);
-                                              controller.to = controller
-                                                  .searchingLocation?.location;
-                                              controller.types = TYPES.HASBOTH;
-                                            } else if (controller.types ==
-                                                TYPES.SELECTEVIAMAP) {
-                                              controller.text.value =
-                                                  "Set pickup location";
-                                              await controller.myLocationMarker(
-                                                  "1",
-                                                  controller.from,
-                                                  controller
-                                                      .searchPageController
-                                                      .myLocationController);
-                                              controller.types = TYPES.HASBOTH;
-                                            } else if (controller.types ==
-                                                TYPES.HASBOTH) {
-                                              controller.route(controller.from,
-                                                  controller.to);
-                                              controller.pass.value = true;
-                                            }
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                              primary: Colors.green),
-                                          child: Text(
-                                            "Next",
-                                            style: textTheme.headline1!
-                                                .copyWith(color: Colors.white),
-                                          )),
-                                    ),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-              ),
+                            )
+                          : searchContainer(textTheme)),
             )
           ],
+        ));
+  }
+
+  Widget searchContainer(TextTheme textTheme) {
+    const h_2 = SizedBox(
+      height: 20,
+    );
+    return Wrap(
+      spacing: 10,
+      children: [
+        Obx(
+          () => Text(
+            controller.text.value,
+            style: textTheme.headline1
+                ?.copyWith(color: Colors.green, fontSize: 15),
+          ),
+        ),
+        h_2,
+        Text(
+          controller.address.value,
+          style: textTheme.headline1,
+        ),
+        h_2,
+        Text(
+          controller.address.value,
+          style: textTheme.headline2?.copyWith(fontSize: 15),
+        ),
+        h_2,
+        Row(
+          children: [
+            Visibility(
+              visible: controller.isShow,
+              child: Expanded(
+                child: ElevatedButton(
+                    onPressed: () async {
+                      controller.handleSearch();
+                    },
+                    style: ElevatedButton.styleFrom(primary: Colors.green),
+                    child: Text(
+                      "Next",
+                      style: textTheme.headline1!.copyWith(color: Colors.white),
+                    )),
+              ),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+
+  Widget roundedButton({required IconData icon, required Function() f}) {
+    return Container(
+        height: 50,
+        width: 50,
+        decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey[350]!,
+                offset: const Offset(0.0, 0.0), //(x,y)
+                blurRadius: 10.0,
+              ),
+            ],
+            border: Border.all(color: Colors.grey[300]!)),
+        child: IconButton(
+          icon: Icon(
+            icon,
+            color: Colors.black,
+          ),
+          onPressed: f,
         ));
   }
 }

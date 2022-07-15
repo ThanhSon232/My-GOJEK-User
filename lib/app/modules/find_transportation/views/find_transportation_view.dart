@@ -49,10 +49,11 @@ class FindTransportationView extends GetView<FindTransportationController> {
                     alignment: WrapAlignment.center,
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
-                      Text(
-                        "Up for an adventure, Thanh Son?",
-                        style: textTheme.bodyText1
-                            ?.copyWith(color: Colors.white, fontSize: 13),
+                      Obx(() => controller.isLoading.value ? const CircularProgressIndicator() : Text(
+                          "Up for an adventure,${controller.userController.user?.fullName}?",
+                          style: textTheme.bodyText1
+                              ?.copyWith(color: Colors.white, fontSize: 13),
+                        ),
                       ),
                       Text(
                         "We can take you anywhere",
@@ -67,19 +68,26 @@ class FindTransportationView extends GetView<FindTransportationController> {
               ),
             ],
           ),
-          Obx(()=>Positioned(
-              top: height*0.355 - (controller.scrollPosition.value < 0 ? 0 : controller.scrollPosition.value),
+          Obx(
+            () => Positioned(
+              top: height * 0.355 -
+                  (controller.scrollPosition.value < 0
+                      ? 0
+                      : controller.scrollPosition.value),
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 0),
-                height: height - height * 0.355 + (controller.scrollPosition.value < 0 ? 0 : controller.scrollPosition.value),
+                height: height -
+                    height * 0.355 +
+                    (controller.scrollPosition.value < 0
+                        ? 0
+                        : controller.scrollPosition.value),
                 width: MediaQuery.of(context).size.width,
                 curve: Curves.linearToEaseOut,
                 decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: AssetImage("assets/background_find_transportation.png")
-                  )
-                ),
+                    image: DecorationImage(
+                        fit: BoxFit.fill,
+                        image: AssetImage(
+                            "assets/background_find_transportation.png"))),
               ),
             ),
           ),
@@ -104,10 +112,10 @@ class FindTransportationView extends GetView<FindTransportationController> {
                 ),
                 SliverToBoxAdapter(
                   child: FindTransportationBox(
-                    mapTap: (){
+                    mapTap: () {
                       Get.toNamed(Routes.MAP);
                     },
-                    searchTap: (){
+                    searchTap: () {
                       Get.toNamed(Routes.SEARCH_PAGE);
                     },
                   ),

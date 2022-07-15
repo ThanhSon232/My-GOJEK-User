@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:my_grab/app/modules/find_transportation/controllers/find_transportation_controller.dart';
 
 import '../../routes/app_pages.dart';
+
 class FindTransportationBox extends StatelessWidget {
   FindTransportationBox({Key? key, this.searchTap, this.mapTap})
       : super(key: key);
@@ -17,13 +18,8 @@ class FindTransportationBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var height = MediaQuery
-        .of(context)
-        .size
-        .height;
-    var textTheme = Theme
-        .of(context)
-        .textTheme;
+    var height = MediaQuery.of(context).size.height;
+    var textTheme = Theme.of(context).textTheme;
 
     const h = SizedBox(
       height: 10,
@@ -35,37 +31,39 @@ class FindTransportationBox extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       padding: const EdgeInsets.all(10),
       height: height * 0.5,
-      width: MediaQuery
-          .of(context)
-          .size
-          .width * 0.85,
+      width: MediaQuery.of(context).size.width * 0.85,
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(16)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-
         children: [
           GestureDetector(
             onTap: mapTap,
             child: Container(
-                height: height * 0.2,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              child: Obx(() => controller.isLoading.value ? const Center(child: CircularProgressIndicator(),) : IgnorePointer(
-                child: GoogleMap(
-                  mapType: MapType.hybrid,
-                    initialCameraPosition: CameraPosition(
-                        target: LatLng(controller.position.value["latitude"], controller.position.value["longitude"]),
-                      zoom: 18
-                    ),
-                  liteModeEnabled: Platform.isAndroid ? true : false,
-                  zoomControlsEnabled: false,
-                  zoomGesturesEnabled: false,
-                  myLocationButtonEnabled: false,
-                  myLocationEnabled: true,
-                  ),
+              height: height * 0.2,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
               ),
+              child: Obx(
+                () => controller.isLoading.value
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : IgnorePointer(
+                        child: GoogleMap(
+                          mapType: MapType.normal,
+                          initialCameraPosition: CameraPosition(
+                              target: LatLng(
+                                  controller.position.value["latitude"],
+                                  controller.position.value["longitude"]),
+                              zoom: 18),
+                          liteModeEnabled: Platform.isAndroid ? true : false,
+                          zoomControlsEnabled: false,
+                          zoomGesturesEnabled: false,
+                          myLocationButtonEnabled: false,
+                          myLocationEnabled: true,
+                        ),
+                      ),
               ),
             ),
           ),
@@ -87,12 +85,16 @@ class FindTransportationBox extends StatelessWidget {
             size: 50,
           ),
           h,
-          Text("Save an address for a faster booking",
-            style: textTheme.headline1?.copyWith(fontSize: 15),),
+          Text(
+            "Save an address for a faster booking",
+            style: textTheme.headline1?.copyWith(fontSize: 15),
+          ),
           h,
           Text(
             "Any frequently used address? Let's save it & never type it ever again",
-            style: textTheme.headline2, textAlign: TextAlign.center,)
+            style: textTheme.headline2,
+            textAlign: TextAlign.center,
+          )
         ],
       ),
     );

@@ -26,6 +26,7 @@ dependencies:
   sticky_headers: ^0.3.0+2
   shimmer: ^2.0.0
   json_serializable: ^6.3.1
+  ticket_widget: ^0.0.1
 
 
 dev_dependencies: 

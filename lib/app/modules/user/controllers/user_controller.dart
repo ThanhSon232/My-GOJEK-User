@@ -31,6 +31,11 @@ class UserController extends GetxController {
   @override
   void onInit() async{
     isLoading.value = true;
+    await init();
+    isLoading.value = false;
+  }
+
+  Future<void> init() async{
     box = await Hive.openBox("box");
     if(box.isOpen){
       if(!box.containsKey("user")){
@@ -39,7 +44,6 @@ class UserController extends GetxController {
         user = await box.get("user");
       }
     }
-    isLoading.value = false;
   }
 
   @override
