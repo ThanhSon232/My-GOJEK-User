@@ -13,6 +13,7 @@ abstract class Routes {
   static const FIND_TRANSPORTATION = _Paths.FIND_TRANSPORTATION;
   static const MAP = _Paths.MAP;
   static const SEARCH_PAGE = _Paths.SEARCH_PAGE;
+  static const USER = _Paths.USER;
 }
 
 abstract class _Paths {
@@ -27,4 +28,5 @@ abstract class _Paths {
   static const FIND_TRANSPORTATION = '/find-transportation';
   static const MAP = '/map';
   static const SEARCH_PAGE = '/search-page';
+  static const USER = '/user';
 }

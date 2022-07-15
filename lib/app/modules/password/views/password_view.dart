@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_grab/app/themes/text.dart';
 
+import '../../../routes/app_pages.dart';
 import '../controllers/password_controller.dart';
 
 class PasswordView extends GetView<PasswordController> {
@@ -50,9 +51,14 @@ class PasswordView extends GetView<PasswordController> {
               const Text("You only have to enter a password in order to create an account in our system", style: normalBlackText,),
               h,
               Text("Password", style: textTheme.headline3,),
-              const TextField(
-                obscureText: true,
-                decoration: InputDecoration(
+              Form(
+                key: controller.formKey,
+                child: TextFormField(
+                  obscureText: true,
+                  controller: controller.passwordController,
+                  validator: (val) => controller.passwordValidator(val!),
+                  decoration: const InputDecoration(
+                  ),
                 ),
               )
             ],
@@ -61,12 +67,17 @@ class PasswordView extends GetView<PasswordController> {
         floatingActionButton:  FloatingActionButton(
             elevation: 0.0,
             backgroundColor: Colors.grey,
-            onPressed: () {
-              // Get.toNamed(Routes.PASSWORD);
+            onPressed: () async {
+              if(controller.check()){
+                await controller.register();
+                Get.offAllNamed(Routes.HOME);
+              }
+
             },
-            child: const Icon(
-              Icons.arrow_forward,
-              color: Colors.white,
+            child: Obx(()=> controller.isLoading.value ? const CircularProgressIndicator(color: Colors.white,) : const Icon(
+                Icons.arrow_forward,
+                color: Colors.white,
+              ),
             ))
       ),
     );

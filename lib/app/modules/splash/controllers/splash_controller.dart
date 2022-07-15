@@ -1,15 +1,15 @@
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class SplashController extends GetxController {
   //TODO: Implement SplashController
-
-  final count = 0.obs;
+  var isFirstTime = true;
   @override
-  void onInit() {
+  void onInit() async{
     super.onInit();
-   print(PolylinePoints()
-       .decodePolyline("!4m14!4m13!1m5!1m1!1s0x31752f1c06f4e1dd:0x43900f1d4539a3d!2m2!1d106.6821717!2d10.762913!1m5!1m1!1s0x31752ef09222b00b:0xb02f0a86479b4d8f!2m2!1d106.6633127!2d10.7543674!3e0"));
+    var box = await Hive.openBox("box");
+    print(await box.get("notFirstTime"));
+    isFirstTime = await box.get("notFirstTime") ?? true;
   }
 
   @override
@@ -22,5 +22,4 @@ class SplashController extends GetxController {
     super.onClose();
   }
 
-  void increment() => count.value++;
 }

@@ -28,6 +28,8 @@ class SearchPageController extends GetxController with GetSingleTickerProviderSt
 
   String text  =  "";
 
+
+
   @override
   void onInit() {
     super.onInit();

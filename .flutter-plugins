@@ -1,0 +1,20 @@
+# This is a generated file; do not edit or check into version control.
+flutter_plugin_android_lifecycle=/Users/thanhson/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-2.0.6/
+flutter_secure_storage=/Users/thanhson/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_secure_storage-5.0.2/
+flutter_secure_storage_linux=/Users/thanhson/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_secure_storage_linux-1.1.0/
+flutter_secure_storage_macos=/Users/thanhson/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_secure_storage_macos-1.1.0/
+flutter_secure_storage_web=/Users/thanhson/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_secure_storage_web-1.0.2/
+flutter_secure_storage_windows=/Users/thanhson/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_secure_storage_windows-1.1.2/
+geocoding=/Users/thanhson/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/geocoding-2.0.4/
+geolocator=/Users/thanhson/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/geolocator-9.0.0/
+geolocator_android=/Users/thanhson/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/geolocator_android-4.0.0/
+geolocator_apple=/Users/thanhson/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/geolocator_apple-2.2.0/
+geolocator_web=/Users/thanhson/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/geolocator_web-2.1.5/
+geolocator_windows=/Users/thanhson/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/geolocator_windows-0.1.1/
+google_maps_flutter=/Users/thanhson/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/google_maps_flutter-2.1.8/
+path_provider=/Users/thanhson/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider-2.0.11/
+path_provider_android=/Users/thanhson/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_android-2.0.16/
+path_provider_ios=/Users/thanhson/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_ios-2.0.10/
+path_provider_linux=/Users/thanhson/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_linux-2.1.7/
+path_provider_macos=/Users/thanhson/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_macos-2.0.6/
+path_provider_windows=/Users/thanhson/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_windows-2.0.7/

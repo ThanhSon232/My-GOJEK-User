@@ -71,10 +71,8 @@ class RegisterView extends GetView<RegisterController> {
                       style: textTheme.headline3,
                     ),
                     TextFormField(
-                      onSaved: (value){
-                        controller.name = value!;
-                      },
                       validator: (value) =>  controller.nameValidator(value!),
+                      controller: controller.nameController,
                       decoration: const InputDecoration(
                           hintText: 'e.g., John Doe', hintStyle: hintStyle,),
                     ),
@@ -83,14 +81,15 @@ class RegisterView extends GetView<RegisterController> {
                       "Email",
                       style: textTheme.headline3,
                     ),
-                    TextFormField(
-                      onSaved: (value) {
-                        controller.email = value!;
-                      },
-                      validator: (value) =>  controller.emailValidator(value!),
-                      decoration: const InputDecoration(
-                          hintText: 'e.g., name@gmail.com',
-                          hintStyle: hintStyle),
+                    Obx(() => TextFormField(
+                        controller: controller.emailController,
+                        validator: (value) =>  controller.emailValidator(value!),
+                        decoration:  InputDecoration(
+                            hintText: 'e.g., name@gmail.com',
+                            hintStyle: hintStyle,
+                          errorText: controller.emailError.value
+                        ),
+                      ),
                     ),
                     h,
                     Text(
@@ -124,17 +123,18 @@ class RegisterView extends GetView<RegisterController> {
                         const SizedBox(
                           width: 5,
                         ),
-                        Flexible(
-                          child: TextFormField(
-                            onSaved: (value) {
-                              controller.phoneNumber = value!;
-                            },
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly
-                            ],
-                            validator: (value) =>  controller.phoneNumberValidator(value!),
-                            decoration: const InputDecoration(
-                                hintText: '123xxxxxxx', hintStyle: hintStyle),
+                        Obx(() => Flexible(
+                            child: TextFormField(
+                              controller: controller.phoneNumberController,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
+                              validator: (value) =>  controller.phoneNumberValidator(value!),
+                              decoration: InputDecoration(
+                                  hintText: '123xxxxxxx', hintStyle: hintStyle,
+                                errorText: controller.phoneNumberError.value
+                              ),
+                            ),
                           ),
                         ),
                       ],
@@ -147,14 +147,16 @@ class RegisterView extends GetView<RegisterController> {
           floatingActionButton: FloatingActionButton(
               elevation: 0.0,
               backgroundColor: Colors.grey,
-              onPressed: () {
-                if(controller.check()){
+              onPressed: () async{
+                var check =  await controller.check();
+                if(check == true){
                   Get.toNamed(Routes.PASSWORD);
                 }
               },
-              child: const Icon(
-                Icons.arrow_forward,
-                color: Colors.white,
+              child: Obx(()=>controller.isLoading.value ? const CircularProgressIndicator() : const Icon(
+                  Icons.arrow_forward,
+                  color: Colors.white,
+                ),
               ))),
     );
   }

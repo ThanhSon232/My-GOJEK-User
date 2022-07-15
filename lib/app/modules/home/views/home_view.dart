@@ -69,19 +69,24 @@ class HomeView extends GetView<HomeController> {
               prefixIconColor: Colors.black,
             ),
             actions: [
-              Container(
-                  margin: const EdgeInsets.only(right: 10),
-                  width: 35,
-                  height: 35,
-                  decoration: const BoxDecoration(
-                      color: Colors.white, shape: BoxShape.circle),
-                  child: Center(
-                      child: Image.asset(
-                    "assets/icon_account.png",
-                    color: Colors.green,
-                    height: 20,
-                    width: 20,
-                  )))
+              GestureDetector(
+                onTap: (){
+                  Get.toNamed(Routes.USER);
+                },
+                child: Container(
+                    margin: const EdgeInsets.only(right: 10),
+                    width: 35,
+                    height: 35,
+                    decoration: const BoxDecoration(
+                        color: Colors.white, shape: BoxShape.circle),
+                    child: Center(
+                        child: Image.asset(
+                      "assets/icon_account.png",
+                      color: Colors.green,
+                      height: 20,
+                      width: 20,
+                    ))),
+              )
             ],
           ),
         ),

@@ -1,14 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:http/http.dart' as http;
 
 abstract class APIHandlerInterface {
   init();
 
-  Future<Map<String, dynamic>> get(String endpoint, Map<String,dynamic> query);
+  Future<Response> get(String endpoint, Map<String, dynamic> query);
 
-  Future<Map<String, dynamic>> post(var body, String endpoint);
+  Future<Response> post(var body, String endpoint);
 
   Future<void> storeToken(String token);
 
@@ -19,16 +19,15 @@ abstract class APIHandlerInterface {
 
 class APIHandlerImp implements APIHandlerInterface {
   static var host = "https://ubercloneserver.herokuapp.com/";
-  static const _storage =  FlutterSecureStorage();
+  static const _storage = FlutterSecureStorage();
   static final APIHandlerImp _singleton = APIHandlerImp._internal();
-  static final client = http.Client();
+  static final client = Dio();
 
   APIHandlerImp._internal();
 
-  factory APIHandlerImp(){
+  factory APIHandlerImp() {
     return _singleton;
   }
-
 
   Future<Map<String, String>> _buildHeader({bool refreshToken = false}) async {
     String? token = await getToken();
@@ -41,7 +40,7 @@ class APIHandlerImp implements APIHandlerInterface {
     };
     if (token != "") {
       print("[API] Token: ${token ?? ''}");
-      baseHeader[HttpHeaders.authorizationHeader] = "Bearer $token";
+      baseHeader["token"] = "$token";
     }
     return baseHeader;
   }
@@ -53,39 +52,38 @@ class APIHandlerImp implements APIHandlerInterface {
   }
 
   @override
-  Future<void> deleteToken() async{
+  Future<void> deleteToken() async {
     await _storage.delete(key: "token");
   }
-  
+
   @override
-  Future<String?> getToken() async{
+  Future<String?> getToken() async {
     return await _storage.read(key: "token");
   }
 
   @override
-  init() {
+  init() {}
 
+  @override
+  Future<Response> post(var body, String endpoint) async {
+    Response response = await client.post(host + endpoint,
+        data: json.encode(body), options: Options(headers: await _buildHeader()));
+    print(response);
+    return response;
   }
 
   @override
-  Future<Map<String, dynamic>> post(var body, String endpoint) async {
-    http.Response response = await client.post(buildUrl(endpoint), body: body, headers: await _buildHeader());
-    return json.decode(response.body);
-  }
-
-  @override
-  Future<void> storeToken(String token) async{
+  Future<void> storeToken(String token) async {
     await _storage.write(key: "token", value: token);
   }
 
-
-  static Uri buildUrl(String endpoint) {
-    return Uri.parse(host + endpoint);
-  }
-
   @override
-  Future<Map<String, dynamic>> get(String endpoint, Map<String, dynamic> query) async{
-    http.Response response = await client.get(buildUrl(endpoint), headers: await _buildHeader());
-    return json.decode(response.body);
+  Future<Response> get(
+      String endpoint, Map<String, dynamic> query) async {
+    Response response = await client.get(host + endpoint,
+        queryParameters: query,
+        options: Options(headers: await _buildHeader()));
+    print(response);
+    return response;
   }
 }

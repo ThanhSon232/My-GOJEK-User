@@ -1,7 +1,7 @@
-import 'dart:convert';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../../data/common/api_handler.dart';
 import '../../../data/common/util.dart';
@@ -12,8 +12,8 @@ class PasswordLoginController extends GetxController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   var loginController = Get.find<LoginController>();
   APIHandlerImp apiHandler = APIHandlerImp();
-  String password = '';
-
+  TextEditingController passwordController = TextEditingController();
+  var isLoading = false.obs;
 
 
   String? passwordValidator(String value){
@@ -37,24 +37,25 @@ class PasswordLoginController extends GetxController {
 
 
   Future<void> login() async {
-    EasyLoading.show();
-    print(loginController.phoneNumber);
-    print(password);
+    isLoading.value = true;
+    print(passwordController.text);
 
-    var response = await apiHandler.post(json.encode({
-      "username": loginController.phoneNumber,
-      "password": password
-    }), "user/login");
-    print(response);
+    var response = await apiHandler.post({
+      "username": '0${loginController.phoneNumberController.text}',
+      "password": passwordController.text
+    }, "user/login");
 
-    if(response["status"]){
-      Get.offAllNamed(Routes.HOME);
-      apiHandler.storeToken(response["data"]);
+
+    if(response.data["status"]){
+      var box = await Hive.openBox("box");
+      await box.put("notFirstTime", false);
+      Get.offNamedUntil(Routes.HOME, ModalRoute.withName(Routes.HOME));
+      apiHandler.storeToken(response.data["data"]);
     } else {
       SnackBar.showSnackBar("Lỗi", "Mật khẩu không đúng");
     }
+    isLoading.value = false;
 
-    EasyLoading.dismiss();
   }
   @override
   void onInit() {

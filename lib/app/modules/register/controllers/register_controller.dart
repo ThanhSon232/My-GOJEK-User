@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_grab/app/data/common/api_handler.dart';
 
 class RegisterController extends GetxController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  String name = '';
-  String email = '';
-  String phoneNumber = '';
+  var emailError = ''.obs;
+  var phoneNumberError = ''.obs;
+  var isLoading = false.obs;
+  APIHandlerImp apiHandlerImp = APIHandlerImp();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
 
   @override
   void onInit() {
@@ -39,12 +44,42 @@ class RegisterController extends GetxController {
     return null;
   }
 
-  bool check() {
+  Future<bool> check() async{
     final isValid = formKey.currentState!.validate();
     if (!isValid) {
       return false;
     }
+    isLoading.value = true;
+
+    print(emailController.text);
+    var emailResponse = await apiHandlerImp.post({
+      "email": emailController.text
+    },
+        "user/checkEmail");
+
+    if(emailResponse.data["status"]){
+      emailError.value = "Email is existed, try another one";
+      isLoading.value = false;
+      return false;
+    }
+    emailError.value = '';
+
+
+    print(phoneNumberController.text);
+    var phoneResponse = await apiHandlerImp.post({
+      "phoneNumber": '0${phoneNumberController.text}'
+    },
+        "user/checkPhonenumber");
+
+    if(phoneResponse.data["status"]){
+      phoneNumberError.value = "Phone number is existed, try another one";
+      isLoading.value = false;
+      return false;
+    }
+
     formKey.currentState!.save();
+    isLoading.value = false;
+    phoneNumberError.value = '';
     return true;
   }
 
@@ -57,4 +92,5 @@ class RegisterController extends GetxController {
   void onClose() {
     super.onClose();
   }
+
 }

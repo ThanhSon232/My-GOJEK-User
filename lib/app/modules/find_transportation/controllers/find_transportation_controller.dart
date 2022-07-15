@@ -13,9 +13,12 @@ class FindTransportationController extends GetxController {
   var isLoading = false.obs;
   Maps map = Maps();
   ScrollController scrollController = ScrollController(initialScrollOffset: 1);
+  // var passwordController = Get.find<PasswordLoginController>().passwordController.text;
+
   @override
   void onInit() async{
     super.onInit();
+    // print("find: " + passwordController);
     isLoading.value = true;
     scrollController.addListener(() {
       scrollPosition.value = scrollController.position.pixels;

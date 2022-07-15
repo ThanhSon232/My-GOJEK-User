@@ -8,5 +8,6 @@ class RegisterBinding extends Bindings {
     Get.lazyPut<RegisterController>(
       () => RegisterController(),
     );
+
   }
 }

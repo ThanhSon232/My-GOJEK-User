@@ -2,27 +2,31 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:my_grab/app/themes/text.dart';
-import '../../../routes/app_pages.dart';
 import '../controllers/password_login_controller.dart';
 
 class PasswordLoginView extends GetView<PasswordLoginController> {
   const PasswordLoginView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
-    const h = SizedBox(height: 10,);
+    const h = SizedBox(
+      height: 10,
+    );
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
           appBar: AppBar(
             leading: IconButton(
               icon: const Icon(
-                Icons.arrow_back, color: Colors.black,
-              ), onPressed: () {
-              Get.back();
-            },
+                Icons.arrow_back,
+                color: Colors.black,
+              ),
+              onPressed: () {
+                Get.back();
+              },
             ),
             actions: [
               Padding(
@@ -47,37 +51,45 @@ class PasswordLoginView extends GetView<PasswordLoginController> {
                   style: textTheme.headline1,
                 ),
                 h,
-                const Text("You only have to enter a password in order to access our system", style: normalBlackText,),
+                const Text(
+                  "You only have to enter a password in order to access our system",
+                  style: normalBlackText,
+                ),
                 h,
-                Text("Password", style: textTheme.headline3,),
+                Text(
+                  "Password",
+                  style: textTheme.headline3,
+                ),
                 Form(
                   key: controller.formKey,
                   child: TextFormField(
                     obscureText: true,
-                    onSaved: (value){
-                      controller.password = value!;
-                    },
-                    validator: (value) =>controller.passwordValidator(value!),
-                    decoration: const InputDecoration(
-                    ),
+                    controller: controller.passwordController,
+                    validator: (value) => controller.passwordValidator(value!),
+                    decoration: const InputDecoration(),
                   ),
                 )
               ],
             ),
           ),
-          floatingActionButton:  FloatingActionButton(
+          floatingActionButton: FloatingActionButton(
               elevation: 0.0,
               backgroundColor: Colors.grey,
               onPressed: () async {
-                if(controller.check()){
+                if (controller.check()) {
                   await controller.login();
                 }
               },
-              child: const Icon(
-                Icons.arrow_forward,
-                color: Colors.white,
-              ))
-      ),
+              child: Obx(
+                () => controller.isLoading.value
+                    ? const CircularProgressIndicator(
+                        color: Colors.white,
+                      )
+                    : const Icon(
+                        Icons.arrow_forward,
+                        color: Colors.white,
+                      ),
+              ))),
     );
   }
 }
