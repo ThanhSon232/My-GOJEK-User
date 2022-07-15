@@ -21,7 +21,9 @@ class MapController extends GetxController {
   var isDragging = false.obs;
   var isShow = false;
   var pass = false.obs;
+  Rx<STATUS> status = STATUS.SELECTVEHICLE.obs;
   RxString text = "Your current location".obs;
+  var selectedIndex = 0.obs;
 
   //search
   RxMap<MarkerId, Marker> markers = <MarkerId, Marker>{}.obs;
@@ -214,3 +216,4 @@ class MapController extends GetxController {
 }
 
 enum TYPES { SELECTLOCATION, SELECTEVIAMAP, SELECTDESTINATION, HASBOTH }
+enum STATUS {SELECTVEHICLE, FINDING, FOUND, CANCEL}

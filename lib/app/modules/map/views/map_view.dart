@@ -65,7 +65,7 @@ class MapView extends GetView<MapController> {
             ),
             Obx(
               () => AnimatedContainer(
-                  height: controller.pass.value ? height * 0.4 : height * 0.3,
+                  height: controller.pass.value ? height * 0.45 : height * 0.3,
                   width: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.symmetric(
                       vertical: 20,
@@ -90,104 +90,65 @@ class MapView extends GetView<MapController> {
                           child: CircularProgressIndicator(),
                         )
                       : controller.pass.value
-                          ? Scaffold(
-                              body: ListView.builder(
-                                  itemCount: 3,
-                                  itemBuilder: (context, itemBuilder) {
-                                    return ListTile(
-                                      leading: Text(itemBuilder.toString()),
-                                      onTap: () {},
-                                    );
-                                  }),
-                              bottomSheet: Container(
-                                height: Get.height * 0.14,
-                                width: Get.width,
-                                padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey[200]!,
-                                        offset: const Offset(0.0, -2.5), //(x,y)
-                                        blurRadius: 3.0,
-                                      ),
-                                    ],
-                                    color: Colors.white,
-                                    border: const Border(
-                                      top: BorderSide(
-                                        //
-                                        color: Colors.black,
-                                        width: 0.1,
-                                      ),
-                                    )),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            showPaymentMethod(
-                                                context: context,
-                                                height: Get.height * 0.95);
-                                          },
-                                          child: Row(
-                                            children: [
-                                              Image.asset(
-                                                "assets/cash_icon.jpeg",
-                                                height: 15,
-                                              ),
-                                              const SizedBox(
-                                                width: 5,
-                                              ),
-                                              Text(
-                                                "Cash >",
-                                                style: textTheme.headline1!
-                                                    .copyWith(fontSize: 13),
-                                              ),
-                                              const SizedBox(
-                                                width: 5,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        SizedBox(
-                                            width: 100,
-                                            child: ElevatedButton(
-                                                style: ElevatedButton.styleFrom(
-                                                    shape: const StadiumBorder(
-                                                      side: BorderSide(
-                                                        color: Colors.green,
-                                                      ),
-                                                    ),
-                                                    primary: Colors.white,
-                                                    elevation: 0),
-                                                onPressed: () {
-                                                  Get.toNamed(Routes.VOUCHER);
-                                                },
-                                                child: Text(
-                                                  "Voucher",
-                                                  style: textTheme.headline2,
-                                                )))
-                                      ],
-                                    ),
-                                    const Spacer(),
-                                    SizedBox(
-                                        width: double.infinity,
-                                        child: ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                                primary: Colors.green),
-                                            onPressed: () {},
-                                            child: const Text("Order"))),
-                                  ],
-                                ),
-                              ),
-                            )
+                          ? (controller.status.value == STATUS.SELECTVEHICLE
+                              ? selectVehicle(
+                                  context: context, textTheme: textTheme)
+                              : findingDriver(textTheme: textTheme))
                           : searchContainer(textTheme)),
             )
           ],
         ));
+  }
+
+  Widget findingDriver({required TextTheme textTheme}){
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Card(
+            shape: RoundedRectangleBorder(
+              side: const BorderSide(
+                color: Colors.grey,
+              ),
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            child: ListTile(
+              leading: Image.asset("assets/vehicles/car.png",height: 40,),
+              title:  Text("Finding a driver for you", style: textTheme.headline2,),
+              subtitle: Text("We got your order", style: textTheme.headline3,),
+            ),
+          ),
+          const SizedBox(height: 10,),
+          Card(
+            shape: RoundedRectangleBorder(
+              side: const BorderSide(
+                color: Colors.grey,
+              ),
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            child: ListTile(
+              leading: Image.asset("assets/cash_icon.jpeg",height: 40,),
+              title:  Text("Cash", style: textTheme.headline2,),
+              trailing: Text("22.000đ", style: textTheme.headline2,),
+            ),
+          ),
+          const Spacer(),
+          Container(
+              height: 80,
+              padding: const EdgeInsets.only(left: 10, right: 10, top: 30),
+              width: double.infinity,
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.red
+                  ),
+                  onPressed: () {
+                    controller.status.value = STATUS.SELECTVEHICLE;
+                  }, child: const Text("Cancel order"))),
+        ],
+      ),
+    );
+
   }
 
   Widget searchContainer(TextTheme textTheme) {
@@ -234,6 +195,142 @@ class MapView extends GetView<MapController> {
           ],
         )
       ],
+    );
+  }
+
+  Widget selectVehicle(
+      {required BuildContext context, required TextTheme textTheme}) {
+    return Scaffold(
+      body: ListView.builder(
+          itemCount: 3,
+          itemBuilder: (context, itemBuilder) {
+            return Obx(
+              () => ListTile(
+                tileColor: controller.selectedIndex.value == itemBuilder
+                    ? Colors.grey[100]
+                    : Colors.white,
+                leading: Image.asset(
+                  "assets/vehicles/car.png",
+                  height: 30,
+                ),
+                title: Row(
+                  children: [
+                    Text(
+                      "GoCar Protect",
+                      style: textTheme.headline1!.copyWith(fontSize: 12),
+                    ),
+                    const Spacer(),
+                    Text(
+                      "22.000đ",
+                      style: textTheme.headline1!.copyWith(fontSize: 12),
+                    ),
+                  ],
+                ),
+                subtitle: Row(
+                  children: const [
+                    Text("3-7 mins"),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Icon(
+                      Icons.supervisor_account,
+                      color: Colors.grey,
+                      size: 18,
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text("4 seater")
+                  ],
+                ),
+                onTap: () {
+                  controller.selectedIndex.value = itemBuilder;
+                },
+              ),
+            );
+          }),
+      bottomSheet: Container(
+        height: Get.height * 0.14,
+        width: Get.width,
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey[200]!,
+                offset: const Offset(0.0, -2.5), //(x,y)
+                blurRadius: 3.0,
+              ),
+            ],
+            color: Colors.white,
+            border: const Border(
+              top: BorderSide(
+                //
+                color: Colors.black,
+                width: 0.1,
+              ),
+            )),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    showPaymentMethod(
+                        context: context, height: Get.height * 0.95);
+                  },
+                  child: Row(
+                    children: [
+                      Image.asset(
+                        "assets/cash_icon.jpeg",
+                        height: 15,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        "Cash >",
+                        style: textTheme.headline1!.copyWith(fontSize: 13),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                    width: 100,
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            shape: const StadiumBorder(
+                              side: BorderSide(
+                                color: Colors.green,
+                              ),
+                            ),
+                            primary: Colors.white,
+                            elevation: 0),
+                        onPressed: () {
+                          Get.toNamed(Routes.VOUCHER);
+                        },
+                        child: Text(
+                          "Voucher",
+                          style: textTheme.headline2,
+                        )))
+              ],
+            ),
+            const Spacer(),
+            SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(primary: Colors.green),
+                    onPressed: () {
+                      controller.status.value = STATUS.FINDING;
+                    },
+                    child: const Text("Order"))),
+          ],
+        ),
+      ),
     );
   }
 
