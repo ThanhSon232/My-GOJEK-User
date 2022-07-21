@@ -82,7 +82,7 @@
 		</data>
 		<key>Assets.car</key>
 		<data>
-		7hHQa5jZVYVr9Fwfkr2OvCqJ+Ks=
+		bIv8FkjSfIuaoWQ5t1sbtUjndcc=
 		</data>
 		<key>Base.lproj/LaunchScreen.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib</key>
 		<data>
@@ -110,7 +110,7 @@
 		</data>
 		<key>Frameworks/App.framework/App</key>
 		<data>
-		7TJ6b3pOhV1p2lTbIugN5tSXvv0=
+		bFGrJNflyqYHvkEO3FTWy+21m4c=
 		</data>
 		<key>Frameworks/App.framework/Info.plist</key>
 		<data>
@@ -118,11 +118,11 @@
 		</data>
 		<key>Frameworks/App.framework/_CodeSignature/CodeResources</key>
 		<data>
-		b7IChJY1wczKVQQ9AUxf25atmJ4=
+		vFKPFMOKJlivb1hSNc91MNaewFM=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.json</key>
 		<data>
-		YLF+eL3LJ8931skmXJVpnP7EemY=
+		h0Ja5zVgeJTOEdGaFqGhaRhoAU4=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/FontManifest.json</key>
 		<data>
@@ -130,7 +130,7 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/NOTICES.Z</key>
 		<data>
-		k0dTwvO5bDg7ZGynu2K1VvN6qY0=
+		RDruJE2cVBSAWfFZm6pjgzrdyFc=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/background_find_transportation.png</key>
 		<data>
@@ -256,6 +256,14 @@
 		<data>
 		SGLJMsFeVOmAIj2T1FpOpo/1pr8=
 		</data>
+		<key>Frameworks/App.framework/flutter_assets/assets/vehicles/car.png</key>
+		<data>
+		qb+j4f9M6gEI8aoGPfDGSRyzxmw=
+		</data>
+		<key>Frameworks/App.framework/flutter_assets/assets/vehicles/motorcycle.png</key>
+		<data>
+		nNiVw/pRyzRJxQFbCxVERBWMrrk=
+		</data>
 		<key>Frameworks/App.framework/flutter_assets/fonts/MaterialIcons-Regular.otf</key>
 		<data>
 		mcmNrC70e/OT89y/p5EgxkVsLrs=
@@ -266,7 +274,7 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/kernel_blob.bin</key>
 		<data>
-		L9qQ1gidO727pl652godyOWdkoM=
+		gZS4vIczqId1krhmBv70i51L4T4=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -1421,11 +1429,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			7hHQa5jZVYVr9Fwfkr2OvCqJ+Ks=
+			bIv8FkjSfIuaoWQ5t1sbtUjndcc=
 			</data>
 			<key>hash2</key>
 			<data>
-			9whxCLNAav/uCjpZt/lwyGDka/5liE5wHWNZbE0C8+M=
+			s5OaM3aQv6iCKcAsnh7ptVGoUPv+39gWV4vEi/14/CI=
 			</data>
 		</dict>
 		<key>Base.lproj/LaunchScreen.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib</key>
@@ -1498,11 +1506,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			7TJ6b3pOhV1p2lTbIugN5tSXvv0=
+			bFGrJNflyqYHvkEO3FTWy+21m4c=
 			</data>
 			<key>hash2</key>
 			<data>
-			ouDggupdZOJXvPW7YJBjV8eLQPrWmDfxXIVj0gn3CPE=
+			hxNe54CFAa6r9LpdNVMHi2wviKPh1zUltjbAKQTZuPY=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/Info.plist</key>
@@ -1520,22 +1528,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			b7IChJY1wczKVQQ9AUxf25atmJ4=
+			vFKPFMOKJlivb1hSNc91MNaewFM=
 			</data>
 			<key>hash2</key>
 			<data>
-			In8MxCHbOMcsEKyZnueNUbUBJVkvBxuqzZtonrnvdiU=
+			WSd/w+Ww4AnJTbb7fz0l+Ug41txEpf2MK9OJ78fsWKw=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.json</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			YLF+eL3LJ8931skmXJVpnP7EemY=
+			h0Ja5zVgeJTOEdGaFqGhaRhoAU4=
 			</data>
 			<key>hash2</key>
 			<data>
-			AkGVG1na+lCMdqb9m+gsm0CfkbUC5gMydKO2wHPPTGY=
+			ag7MOEfjPjVu/WxnpXKcf8ONJMTFFYZw3pEle322inQ=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/FontManifest.json</key>
@@ -1553,11 +1561,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			k0dTwvO5bDg7ZGynu2K1VvN6qY0=
+			RDruJE2cVBSAWfFZm6pjgzrdyFc=
 			</data>
 			<key>hash2</key>
 			<data>
-			8Aq0uC8a+TZMT7y350k03s1hW5Lu3u6WxxFi3Zk3KJs=
+			kwTGiSOn0D8icfMu7rXDE/FTRUwuRbzr7g+ykO+1lZE=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/background_find_transportation.png</key>
@@ -1901,6 +1909,28 @@
 			6nJkz86hsFwBNjL60PQMBhpRSQgMXlQXFF8luTPwOxQ=
 			</data>
 		</dict>
+		<key>Frameworks/App.framework/flutter_assets/assets/vehicles/car.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			qb+j4f9M6gEI8aoGPfDGSRyzxmw=
+			</data>
+			<key>hash2</key>
+			<data>
+			su37EkAXN+kCEHE4rFiyadkKP4Ovqxcgsziciui0XHg=
+			</data>
+		</dict>
+		<key>Frameworks/App.framework/flutter_assets/assets/vehicles/motorcycle.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			nNiVw/pRyzRJxQFbCxVERBWMrrk=
+			</data>
+			<key>hash2</key>
+			<data>
+			g4sHOJwfxVfeUV1c1Xe5xcYkJ+svXjCdwUlJ34sRwfM=
+			</data>
+		</dict>
 		<key>Frameworks/App.framework/flutter_assets/fonts/MaterialIcons-Regular.otf</key>
 		<dict>
 			<key>hash</key>
@@ -1927,11 +1957,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			L9qQ1gidO727pl652godyOWdkoM=
+			gZS4vIczqId1krhmBv70i51L4T4=
 			</data>
 			<key>hash2</key>
 			<data>
-			x6unq0pbCKlOpexKpayWlN0VNpatAs4Aiqu9cqfr5DY=
+			8DL302jAQE62kNltTohB/9EPvV68GIoaEBQwfGQB4w4=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>

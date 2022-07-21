@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 
@@ -122,6 +124,15 @@ class SearchPageView extends GetView<SearchPageController> {
                                 onFieldSubmitted: (value) async {
                                   await controller.searchLocation(value);
                                 },
+                                onTap: () =>
+                                    controller.myLocationController.selection =
+                                        TextSelection(
+                                            baseOffset: 0,
+                                            extentOffset: controller
+                                                .myLocationController
+                                                .value
+                                                .text
+                                                .length),
                               ),
                               Divider(
                                 height: 1,
@@ -133,7 +144,16 @@ class SearchPageView extends GetView<SearchPageController> {
                                 decoration: const InputDecoration.collapsed(
                                     hintText: 'Search for a destination'),
                                 controller: controller.destinationController,
-                                onTap: () {},
+                                onTap: () {
+                                  controller.destinationController.selection =
+                                      TextSelection(
+                                          baseOffset: 0,
+                                          extentOffset: controller
+                                              .destinationController
+                                              .value
+                                              .text
+                                              .length);
+                                },
                                 onFieldSubmitted: (e) async {
                                   await controller.searchLocation(e);
                                 },
@@ -176,59 +196,62 @@ class SearchPageView extends GetView<SearchPageController> {
             ),
             elevation: 1,
           ),
-          body: controller.location.isEmpty
-              ? Image.asset("assets/empty.jpeg")
-              : controller.isLoading.value
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : ListView.separated(
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          leading: const Icon(Icons.location_on),
-                          horizontalTitleGap: 0,
-                          title: Text(controller.location[index].name!),
-                          subtitle: Text(controller.location[index].address!),
-                          onTap: () async {
-                            if (controller
-                                    .myLocationController.text.isNotEmpty &&
-                                controller.destinationController.text.isEmpty) {
-                              controller.myLocationController.text =
-                                  controller.location[index].address!;
-                              Get.toNamed(Routes.MAP, arguments: {
-                                'location': controller.location[index],
-                                "type": SEARCHTYPES.LOCATION
-                              });
-                            } else if (controller
-                                    .myLocationController.text.isEmpty &&
-                                controller
-                                    .destinationController.text.isNotEmpty) {
-                              controller.destinationController.text =
-                                  controller.location[index].address!;
-                              Get.toNamed(Routes.MAP, arguments: {
-                                'destination': controller.location[index],
-                                "type": SEARCHTYPES.MYDESTINATION
-                              });
-                            } else if (controller
-                                    .myLocationController.text.isNotEmpty &&
-                                controller
-                                    .destinationController.text.isNotEmpty) {
-                              Get.toNamed(Routes.MAP, arguments: {
-                                'destination': controller.location[index],
-                                "type": SEARCHTYPES.MYDESTINATION
-                              });
-                            }
-                          },
-                        );
-                      },
-                      itemCount: controller.location.length,
-                      separatorBuilder: (BuildContext context, int index) {
-                        return const Divider(
-                          thickness: 1,
-                          height: 20,
-                        );
-                      },
-                    )),
+          body: Obx(
+            () => controller.location.isEmpty && !controller.isLoading.value
+                ? Image.asset("assets/empty.jpeg")
+                : controller.isLoading.value
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : ListView.separated(
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            leading: const Icon(Icons.location_on),
+                            horizontalTitleGap: 0,
+                            title: Text(controller.location[index].name!),
+                            subtitle: Text(controller.location[index].address!),
+                            onTap: () async {
+                              if (controller
+                                      .myLocationController.text.isNotEmpty &&
+                                  controller
+                                      .destinationController.text.isEmpty) {
+                                controller.myLocationController.text =
+                                    controller.location[index].address!;
+                                Get.toNamed(Routes.MAP, arguments: {
+                                  'location': controller.location[index],
+                                  "type": SEARCHTYPES.LOCATION
+                                });
+                              } else if (controller
+                                      .myLocationController.text.isEmpty &&
+                                  controller
+                                      .destinationController.text.isNotEmpty) {
+                                controller.destinationController.text =
+                                    controller.location[index].address!;
+                                Get.toNamed(Routes.MAP, arguments: {
+                                  'destination': controller.location[index],
+                                  "type": SEARCHTYPES.MYDESTINATION
+                                });
+                              } else if (controller
+                                      .myLocationController.text.isNotEmpty &&
+                                  controller
+                                      .destinationController.text.isNotEmpty) {
+                                Get.toNamed(Routes.MAP, arguments: {
+                                  'destination': controller.location[index],
+                                  "type": SEARCHTYPES.MYDESTINATION
+                                });
+                              }
+                            },
+                          );
+                        },
+                        itemCount: controller.location.length,
+                        separatorBuilder: (BuildContext context, int index) {
+                          return const Divider(
+                            thickness: 1,
+                            height: 20,
+                          );
+                        },
+                      ),
+          )),
     );
   }
 }

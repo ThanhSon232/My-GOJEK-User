@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:my_grab/app/data/common/bottom_sheets.dart';
+import 'package:my_grab/app/data/common/util.dart';
 
 import '../../../routes/app_pages.dart';
 import '../controllers/map_controller.dart';
@@ -17,7 +18,7 @@ class MapView extends GetView<MapController> {
     return Scaffold(
         body: Obx(
           () => GoogleMap(
-            polylines: controller.polyline.value.toSet(),
+            polylines: controller.polyline.toSet(),
             mapType: MapType.normal,
             myLocationButtonEnabled: false,
             myLocationEnabled: true,
@@ -26,14 +27,14 @@ class MapView extends GetView<MapController> {
               controller.googleMapController = control;
               controller.isLoading.value = false;
             },
-            markers: controller.markers.value.values.toSet(),
+            markers: controller.markers.values.toSet(),
             initialCameraPosition: CameraPosition(
                 target: controller.searchingLocation == null
                     ? LatLng(
-                        controller.findTransportationController.position
-                            .value["latitude"],
-                        controller.findTransportationController.position
-                            .value["longitude"])
+                        controller
+                            .findTransportationController.position["latitude"],
+                        controller
+                            .findTransportationController.position["longitude"])
                     : LatLng(controller.searchingLocation!.location!.lat!,
                         controller.searchingLocation!.location!.lng!),
                 zoom: 15),
@@ -65,7 +66,7 @@ class MapView extends GetView<MapController> {
             ),
             Obx(
               () => AnimatedContainer(
-                  height: controller.pass.value ? height * 0.45 : height * 0.3,
+                  height: controller.pass.value ? height * 0.42 : height * 0.3,
                   width: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.symmetric(
                       vertical: 20,
@@ -100,55 +101,82 @@ class MapView extends GetView<MapController> {
         ));
   }
 
-  Widget findingDriver({required TextTheme textTheme}){
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Card(
-            shape: RoundedRectangleBorder(
-              side: const BorderSide(
-                color: Colors.grey,
-              ),
-              borderRadius: BorderRadius.circular(15.0),
-            ),
-            child: ListTile(
-              leading: Image.asset("assets/vehicles/car.png",height: 40,),
-              title:  Text("Finding a driver for you", style: textTheme.headline2,),
-              subtitle: Text("We got your order", style: textTheme.headline3,),
-            ),
-          ),
-          const SizedBox(height: 10,),
-          Card(
-            shape: RoundedRectangleBorder(
-              side: const BorderSide(
-                color: Colors.grey,
-              ),
-              borderRadius: BorderRadius.circular(15.0),
-            ),
-            child: ListTile(
-              leading: Image.asset("assets/cash_icon.jpeg",height: 40,),
-              title:  Text("Cash", style: textTheme.headline2,),
-              trailing: Text("22.000đ", style: textTheme.headline2,),
-            ),
-          ),
-          const Spacer(),
-          Container(
-              height: 80,
-              padding: const EdgeInsets.only(left: 10, right: 10, top: 30),
-              width: double.infinity,
-              child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: Colors.red
+  Widget findingDriver({required TextTheme textTheme}) {
+    return Obx(
+      () => controller.isLoading.value
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Card(
+                    shape: RoundedRectangleBorder(
+                      side: const BorderSide(
+                        color: Colors.grey,
+                      ),
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child: ListTile(
+                      leading: Image.asset(
+                        controller.vehicleList[controller.selectedIndex.value]
+                            .picture!,
+                        height: 40,
+                      ),
+                      title: Text(
+                        "Finding a driver for you",
+                        style: textTheme.headline2,
+                      ),
+                      subtitle: Text(
+                        "We got your order",
+                        style: textTheme.headline3,
+                      ),
+                    ),
                   ),
-                  onPressed: () {
-                    controller.status.value = STATUS.SELECTVEHICLE;
-                  }, child: const Text("Cancel order"))),
-        ],
-      ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Card(
+                    shape: RoundedRectangleBorder(
+                      side: const BorderSide(
+                        color: Colors.grey,
+                      ),
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child: ListTile(
+                      leading: Image.asset(
+                        "assets/cash_icon.jpeg",
+                        height: 40,
+                      ),
+                      title: Text(
+                        "Cash",
+                        style: textTheme.headline2,
+                      ),
+                      trailing: Text(
+                        "${formatBalance.format(double.parse(controller.vehicleList[controller.selectedIndex.value].price!))}đ",
+                        style: textTheme.headline2,
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  Container(
+                      height: 80,
+                      padding:
+                          const EdgeInsets.only(left: 10, right: 10, top: 30),
+                      width: double.infinity,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(primary: Colors.red),
+                          onPressed: () async {
+                            controller.status.value = STATUS.SELECTVEHICLE;
+                            await controller.cancelBooking();
+                          },
+                          child: const Text("Cancel order"))),
+                ],
+              ),
+            ),
     );
-
   }
 
   Widget searchContainer(TextTheme textTheme) {
@@ -201,54 +229,65 @@ class MapView extends GetView<MapController> {
   Widget selectVehicle(
       {required BuildContext context, required TextTheme textTheme}) {
     return Scaffold(
-      body: ListView.builder(
-          itemCount: 3,
-          itemBuilder: (context, itemBuilder) {
-            return Obx(
-              () => ListTile(
-                tileColor: controller.selectedIndex.value == itemBuilder
-                    ? Colors.grey[100]
-                    : Colors.white,
-                leading: Image.asset(
-                  "assets/vehicles/car.png",
-                  height: 30,
-                ),
-                title: Row(
-                  children: [
-                    Text(
-                      "GoCar Protect",
-                      style: textTheme.headline1!.copyWith(fontSize: 12),
+      body: Obx(
+        () => controller.isLoading.value
+            ? const Align(
+                alignment: Alignment.topCenter,
+                child: CircularProgressIndicator(),
+              )
+            : ListView.builder(
+                itemCount: controller.vehicleList.length,
+                padding: const EdgeInsets.only(bottom: 150),
+                itemBuilder: (context, itemBuilder) {
+                  return Obx(
+                    () => ListTile(
+                      tileColor: controller.selectedIndex.value == itemBuilder
+                          ? Colors.grey[100]
+                          : Colors.white,
+                      leading: Image.asset(
+                        controller.vehicleList[itemBuilder].picture!,
+                        height: 30,
+                      ),
+                      title: Row(
+                        children: [
+                          Text(
+                            controller.vehicleList[itemBuilder].name!,
+                            style: textTheme.headline1!.copyWith(fontSize: 12),
+                          ),
+                          const Spacer(),
+                          Text(
+                            "${formatBalance.format(double.parse(controller.vehicleList[itemBuilder].price!))}đ",
+                            style: textTheme.headline1!.copyWith(fontSize: 12),
+                          ),
+                        ],
+                      ),
+                      subtitle: Row(
+                        children: [
+                          Text(controller.vehicleList[itemBuilder].duration!),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          const Icon(
+                            Icons.supervisor_account,
+                            color: Colors.grey,
+                            size: 18,
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            "${controller.vehicleList[itemBuilder].seatNumber!} seaters",
+                          )
+                        ],
+                      ),
+                      onTap: () async {
+                        controller.selectedIndex.value = itemBuilder;
+                        await controller.route(controller.from, controller.to);
+                      },
                     ),
-                    const Spacer(),
-                    Text(
-                      "22.000đ",
-                      style: textTheme.headline1!.copyWith(fontSize: 12),
-                    ),
-                  ],
-                ),
-                subtitle: Row(
-                  children: const [
-                    Text("3-7 mins"),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Icon(
-                      Icons.supervisor_account,
-                      color: Colors.grey,
-                      size: 18,
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text("4 seater")
-                  ],
-                ),
-                onTap: () {
-                  controller.selectedIndex.value = itemBuilder;
-                },
-              ),
-            );
-          }),
+                  );
+                }),
+      ),
       bottomSheet: Container(
         height: Get.height * 0.14,
         width: Get.width,
@@ -322,12 +361,16 @@ class MapView extends GetView<MapController> {
             const Spacer(),
             SizedBox(
                 width: double.infinity,
-                child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.green),
-                    onPressed: () {
-                      controller.status.value = STATUS.FINDING;
-                    },
-                    child: const Text("Order"))),
+                child: IgnorePointer(
+                  ignoring: controller.isLoading.value,
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(primary: Colors.green),
+                      onPressed: () {
+                        controller.status.value = STATUS.FINDING;
+                        controller.bookingCar();
+                      },
+                      child: const Text("Order")),
+                )),
           ],
         ),
       ),

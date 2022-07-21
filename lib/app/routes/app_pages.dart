@@ -66,14 +66,21 @@ class AppPages {
     GetPage(
         name: _Paths.HOME,
         page: () => const HomeView(),
-        binding: HomeBinding()),
+        binding: HomeBinding(),
+      bindings: [
+        // FindTransportationBinding(),
+        // SearchPageBinding()
+      ]
+    ),
     GetPage(
         name: _Paths.FIND_TRANSPORTATION,
         page: () => const FindTransportationView(),
         binding: FindTransportationBinding(),
         bindings: [UserBinding()]),
     GetPage(
-        name: _Paths.MAP, page: () => const MapView(), binding: MapBinding()),
+        name: _Paths.MAP, page: () => const MapView(), binding: MapBinding(),
+        bindings: [UserBinding()]
+    ),
     GetPage(
       name: _Paths.SEARCH_PAGE,
       page: () => const SearchPageView(),

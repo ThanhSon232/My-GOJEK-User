@@ -3,18 +3,23 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:my_grab/app/data/common/api_handler.dart';
 import 'package:my_grab/app/data/common/location.dart';
 import 'package:my_grab/app/data/common/util.dart';
+import 'package:my_grab/app/data/models/vehicle.dart';
 import 'package:my_grab/app/modules/find_transportation/controllers/find_transportation_controller.dart';
 import 'package:my_grab/app/modules/search_page/controllers/search_page_controller.dart';
+import 'package:my_grab/app/modules/user/controllers/user_controller.dart';
+import 'package:intl/intl.dart';
 
 import '../../../data/common/network_handler.dart';
 import '../../../data/common/search_location.dart';
 
 class MapController extends GetxController {
-  final count = 0.obs;
+  var id = 0;
   var findTransportationController = Get.find<FindTransportationController>();
   var searchPageController = Get.find<SearchPageController>();
+  var userController = Get.find<UserController>();
   var address = ''.obs;
   late GoogleMapController googleMapController;
   var isLoading = false.obs;
@@ -24,6 +29,44 @@ class MapController extends GetxController {
   Rx<STATUS> status = STATUS.SELECTVEHICLE.obs;
   RxString text = "Your current location".obs;
   var selectedIndex = 0.obs;
+  List<Vehicle> vehicleList = [
+    Vehicle(
+        name: "Motorbike",
+        type: "MOTORBIKE",
+        price: "",
+        duration: "",
+        priceAfterVoucher: "",
+        picture: "assets/vehicles/motorcycle.png",
+      seatNumber: "2"
+    ),
+    Vehicle(
+        name: "Car4S",
+        type: "CAR4S",
+        price: "",
+        duration: "",
+        priceAfterVoucher: "",
+        picture: "assets/vehicles/car.png",
+        seatNumber: "4"
+    ),
+    Vehicle(
+        name: "Car7S",
+        type: "CAR7S",
+        price: "",
+        duration: "",
+        priceAfterVoucher: "",
+        picture: "assets/vehicles/car.png",
+        seatNumber: "7"
+    ),
+    Vehicle(
+        name: "Car16S",
+        type: "CAR16S",
+        price: "",
+        duration: "",
+        priceAfterVoucher: "",
+        picture: "assets/vehicles/car.png",
+        seatNumber: "16"
+    ),
+  ];
 
   //search
   RxMap<MarkerId, Marker> markers = <MarkerId, Marker>{}.obs;
@@ -34,21 +77,25 @@ class MapController extends GetxController {
   SearchLocation? searchingLocation;
   TYPES? types;
 
+
   //controller
   Location? from;
   Location? to;
+
+  APIHandlerImp apiHandlerImp = APIHandlerImp();
 
   @override
   void onInit() async {
     super.onInit();
     isLoading.value = true;
+
     await getCurrentPosition();
-    await getAddress(findTransportationController.position["latitude"],
-        findTransportationController.position["longitude"]);
 
     from = Location(
         lat: findTransportationController.position["latitude"],
         lng: findTransportationController.position["longitude"]);
+
+    await getAddress(from);
 
     to = Location(
         lat: findTransportationController.position["latitude"],
@@ -57,7 +104,7 @@ class MapController extends GetxController {
     polyline.add(Polyline(
       polylineId: const PolylineId('line1'),
       visible: true,
-      points: polylinePoints.value,
+      points: polylinePoints,
       width: 5,
       color: Colors.blue,
     ));
@@ -68,7 +115,7 @@ class MapController extends GetxController {
         text.value = "Set pickup location";
         myLocation = Get.arguments["location"];
         await getAddress(
-            myLocation!.location!.lat!, myLocation!.location!.lng!);
+            myLocation!.location);
         await myLocationMarker("1", myLocation?.location,
             searchPageController.myLocationController);
         types = TYPES.SELECTLOCATION;
@@ -96,32 +143,22 @@ class MapController extends GetxController {
     isLoading.value = false;
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 
   getCurrentPosition() async {
     findTransportationController.position.value =
         await findTransportationController.map.getCurrentPosition();
   }
 
-  getAddress(double? latitude, double? longitude) async {
+  getAddress(Location? location) async {
     var temp = await findTransportationController.map
-        .getCurrentAddress(latitude, longitude);
+        .getCurrentAddress(location?.lat!, location?.lng!);
     address.value =
         "${temp.name} ${temp.subLocality} ${temp.subAdministrativeArea} ${temp.locality}  ${temp.country}";
+    location?.address = address.value;
   }
 
   myLocationMarker(String id, Location? l, TextEditingController t) async {
-    await getAddress(l?.lat!, l?.lng!);
+    await getAddress(l);
     t.text = address.value;
     final Marker marker = Marker(
         markerId: MarkerId(id),
@@ -135,7 +172,7 @@ class MapController extends GetxController {
         onDragEnd: ((newPosition) async {
           isDragging.value = false;
           l?.setLocation(newPosition);
-          await getAddress(newPosition.latitude, newPosition.longitude);
+          await getAddress(l);
           t.text = address.value;
         }),
         position: LatLng(
@@ -148,6 +185,8 @@ class MapController extends GetxController {
   }
 
   route(Location? from, Location? to) async {
+    EasyLoading.show();
+
     polylinePoints.clear();
     var start = "${from?.lat},${from?.lng}";
     var end = "${to?.lat},${to?.lng}";
@@ -155,10 +194,10 @@ class MapController extends GetxController {
       "key": "d2c643ad1e2975f1fa0d1719903704e8",
       "origin": start,
       "destination": end,
-      "mode": "motorcycle"
+      "mode": selectedIndex.value == 0 ? "motorcycle" : "car"
     };
 
-    EasyLoading.show();
+    isLoading.value = true;
     var response = await NetworkHandler.getWithQuery('route', query);
     searchResult = PolylinePoints()
         .decodePolyline(response["result"]["routes"][0]["overviewPolyline"]);
@@ -166,7 +205,56 @@ class MapController extends GetxController {
       polylinePoints.add(LatLng(point.latitude, point.longitude));
     }
     polyline.refresh();
+
+
+    var response1 = await apiHandlerImp.put({
+      "startAddress": {
+        "address": from?.address,
+        "longitude": from?.lng,
+        "latitude": from?.lat
+      },
+      "destination":{
+        "address": to?.address,
+        "longitude": to?.lng,
+        "latitude": to?.lat
+      } ,
+      "createdTime": "",
+      "distance": response["result"]["routes"][0]["legs"][0]["distance"]["value"]/1000,
+      "timeSecond": response["result"]["routes"][0]["legs"][0]["duration"]["value"],
+      "vehicleType": "MOTORBIKE",
+      "note": ""
+    }, "user/${userController.user!.id}/booking");
+
+    print({
+      "startAddress": {
+        "address": from?.address,
+        "longitude": from?.lng,
+        "latitude": from?.lat
+      },
+      "destination":{
+        "address": to?.address,
+        "longitude": to?.lng,
+        "latitude": to?.lat
+      } ,
+      "createdTime": DateFormat("yyyy-MM-dd HH:mm").format(
+          DateTime.now().toLocal()),
+      "distance": response["result"]["routes"][0]["legs"][0]["distance"]["value"],
+      "timeSecond": response["result"]["routes"][0]["legs"][0]["duration"]["value"],
+      "vehicleType": "MOTORBIKE",
+      "note": ""
+    });
+
+    id = response1.data["data"]["requestId"];
+
+    for(int i = 0; i < response1.data["data"]["vehiclesAndPrices"].length ;i++){
+      vehicleList[i].price = response1.data["data"]["vehiclesAndPrices"][i]["price"].toString();
+      vehicleList[i].duration = response["result"]["routes"][0]["legs"][0]["duration"]["text"].toString().replaceFirst("phút", "m").replaceFirst("giờ", "h").replaceFirst("giây", "s");
+    }
+
+
+    isLoading.value = false;
     EasyLoading.dismiss();
+
   }
 
   void dragPosition(MarkerId markerId, CameraPosition position) {
@@ -196,24 +284,58 @@ class MapController extends GetxController {
     } else if (types == TYPES.HASBOTH) {
       route(from, to);
       pass.value = true;
+      googleMapController.animateCamera(CameraUpdate.newCameraPosition(
+        CameraPosition(target: LatLng((from!.lat!+to!.lat!)/2, (from!.lng!+to!.lng!)/2), zoom: 12.5),
+      ));
     }
   }
 
-  Future<void> handleMyLocationButton() async{
+  Future<void> handleMyLocationButton() async {
     await getCurrentPosition();
     googleMapController.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(
             target: LatLng(
-                findTransportationController
-                    .position.value["latitude"],
-                findTransportationController
-                    .position.value["longitude"]),
+                findTransportationController.position["latitude"],
+                findTransportationController.position["longitude"]),
             zoom: 15),
       ),
     );
   }
+
+  Future<void> bookingCar() async {
+    EasyLoading.show();
+    isLoading.value = true;
+
+    await apiHandlerImp.put({
+      "requestId": id,
+      "vehicleAndPrice":{
+        "vehicleType": vehicleList[selectedIndex.value].type,
+        "price": vehicleList[selectedIndex.value].price
+      },
+      "discount": ""
+    }
+        , "user/confirmBooking");
+
+    isLoading.value = false;
+    showSnackBar("Đặt xe thành công", "Đợi tí có người đón liền");
+    EasyLoading.dismiss();
+
+  }
+
+  Future<void> cancelBooking() async {
+    EasyLoading.show();
+    isLoading.value = true;
+
+      await apiHandlerImp.put({}
+        , "user/cancelBooking/$id");
+
+    isLoading.value = false;
+    EasyLoading.dismiss();
+
+  }
 }
 
 enum TYPES { SELECTLOCATION, SELECTEVIAMAP, SELECTDESTINATION, HASBOTH }
-enum STATUS {SELECTVEHICLE, FINDING, FOUND, CANCEL}
+
+enum STATUS { SELECTVEHICLE, FINDING, FOUND, CANCEL }

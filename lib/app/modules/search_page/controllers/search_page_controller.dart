@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -28,6 +30,8 @@ class SearchPageController extends GetxController with GetSingleTickerProviderSt
 
   String text  =  "";
 
+  Timer? _debounce;
+
 
 
   @override
@@ -54,6 +58,30 @@ class SearchPageController extends GetxController with GetSingleTickerProviderSt
         isDestinationFocused.value = false;
       }
     });
+
+    myLocationController.addListener(() {
+      if(myLocationController.text == ""){
+        location = [];
+      }
+      if (_debounce?.isActive ?? false) _debounce!.cancel();
+      _debounce = Timer(const Duration(milliseconds: 650), () {
+        if (myLocationController.text != "") {
+          searchLocation(myLocationController.text);
+        }
+      });
+    });
+
+    destinationController.addListener(() {
+      if(destinationController.text.isEmpty){
+        location = [];
+      }
+      if (_debounce?.isActive ?? false) _debounce!.cancel();
+      _debounce = Timer(const Duration(milliseconds: 650), () {
+        if (destinationController.text != "") {
+          searchLocation(destinationController.text);
+        }
+      });
+    });
   }
 
   searchLocation(String text) async{
@@ -61,7 +89,8 @@ class SearchPageController extends GetxController with GetSingleTickerProviderSt
     location = [];
     Map<String,String> query = {
       "key": "d2c643ad1e2975f1fa0d1719903704e8",
-      "text": text
+      "text": text,
+      "location": "${currentLocation.lat},${currentLocation.lng}"
     };
     var response = await NetworkHandler.getWithQuery('place/text-search', query);
     for(var i = 0; i< response["result"].length; i++ ){

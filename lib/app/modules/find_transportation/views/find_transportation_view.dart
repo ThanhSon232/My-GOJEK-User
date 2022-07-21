@@ -49,7 +49,7 @@ class FindTransportationView extends GetView<FindTransportationController> {
                     alignment: WrapAlignment.center,
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
-                      Obx(() => controller.isLoading.value ? const CircularProgressIndicator() : Text(
+                      Obx(() => controller.userController.isLoading.value ? const Center(child:  CircularProgressIndicator()) : Text(
                           "Up for an adventure,${controller.userController.user?.fullName}?",
                           style: textTheme.bodyText1
                               ?.copyWith(color: Colors.white, fontSize: 13),

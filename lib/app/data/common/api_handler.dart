@@ -9,6 +9,8 @@ abstract class APIHandlerInterface {
   Future<Response> get(String endpoint, Map<String, dynamic> query);
 
   Future<Response> post(var body, String endpoint);
+  Future<Response> put(var body, String endpoint);
+
 
   Future<void> storeToken(String token);
 
@@ -86,4 +88,15 @@ class APIHandlerImp implements APIHandlerInterface {
     print(response);
     return response;
   }
+
+  @override
+  Future<Response> put(body, String endpoint) async{
+    Response response = await client.put(host + endpoint,
+        data: json.encode(body), options: Options(headers: await _buildHeader()));
+    print(response);
+    return response;
+  }
+
+
+
 }

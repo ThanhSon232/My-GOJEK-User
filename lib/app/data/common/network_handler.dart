@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:http/http.dart' as http;
 class NetworkHandler{
   static var host = "http://api.map4d.vn/sdk/";
@@ -14,9 +15,18 @@ class NetworkHandler{
 
     );
     print( buildUrlWithQuery(endpoint, query));
-
+    print(response.body);
     return json.decode(response.body);
   }
+
+
+  static Future<Map<String,dynamic>> put(body, String endpoint) async{
+    var response = await client.put(buildUrl(endpoint), body: jsonEncode(body));
+    print(response);
+    return json.decode(response.body);
+  }
+
+
 
 
   static Uri buildUrl(String endpoint){

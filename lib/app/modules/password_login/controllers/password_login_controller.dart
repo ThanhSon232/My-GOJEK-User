@@ -52,7 +52,7 @@ class PasswordLoginController extends GetxController {
       Get.offNamedUntil(Routes.HOME, ModalRoute.withName(Routes.HOME));
       apiHandler.storeToken(response.data["data"]);
     } else {
-      SnackBar.showSnackBar("Lỗi", "Mật khẩu không đúng");
+      showSnackBar("Lỗi", "Mật khẩu không đúng");
     }
     isLoading.value = false;
 
