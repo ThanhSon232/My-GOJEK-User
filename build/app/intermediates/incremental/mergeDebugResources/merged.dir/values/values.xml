@@ -117,6 +117,14 @@
     <string name="common_open_on_phone">Open on phone</string>
     <string name="common_signin_button_text">Sign in</string>
     <string name="common_signin_button_text_long">Sign in with Google</string>
+    <string name="default_web_client_id" translatable="false">1077297100095-0qitkmhf77bk72cot62mlroq0r0b6sri.apps.googleusercontent.com</string>
+    <string name="firebase_database_url" translatable="false">https://uberclone-1707-default-rtdb.asia-southeast1.firebasedatabase.app</string>
+    <string name="gcm_defaultSenderId" translatable="false">1077297100095</string>
+    <string name="google_api_key" translatable="false">AIzaSyCRO_A7tsID_OjJOwoHCVZN0tWY9Ucd5eE</string>
+    <string name="google_app_id" translatable="false">1:1077297100095:android:3de59f8a9c61220b1c0f8a</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCRO_A7tsID_OjJOwoHCVZN0tWY9Ucd5eE</string>
+    <string name="google_storage_bucket" translatable="false">uberclone-1707.appspot.com</string>
+    <string name="project_id" translatable="false">uberclone-1707</string>
     <string name="status_bar_notification_info_overflow">999+</string>
     <style name="LaunchTheme" parent="@android:style/Theme.Light.NoTitleBar">
         <!-- Show a splash screen on the activity. Automatically removed when

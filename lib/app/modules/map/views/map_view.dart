@@ -51,7 +51,11 @@ class MapView extends GetView<MapController> {
                   roundedButton(
                       icon: Icons.arrow_back,
                       f: () {
-                        Get.back();
+                       if(controller.status.value == STATUS.FINDING){
+                         controller.handleBackButton();
+                       } else {
+                         Get.back();
+                       }
                       }),
                   roundedButton(
                       icon: Icons.navigation,
@@ -169,7 +173,6 @@ class MapView extends GetView<MapController> {
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(primary: Colors.red),
                           onPressed: () async {
-                            controller.status.value = STATUS.SELECTVEHICLE;
                             await controller.cancelBooking();
                           },
                           child: const Text("Cancel order"))),
@@ -365,9 +368,9 @@ class MapView extends GetView<MapController> {
                   ignoring: controller.isLoading.value,
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(primary: Colors.green),
-                      onPressed: () {
+                      onPressed: () async {
                         controller.status.value = STATUS.FINDING;
-                        controller.bookingCar();
+                        await controller.bookingCar();
                       },
                       child: const Text("Order")),
                 )),

@@ -85,6 +85,7 @@ class APIHandlerImp implements APIHandlerInterface {
     Response response = await client.get(host + endpoint,
         queryParameters: query,
         options: Options(headers: await _buildHeader()));
+    print("\n\n"+endpoint);
     print(response);
     return response;
   }
@@ -93,6 +94,7 @@ class APIHandlerImp implements APIHandlerInterface {
   Future<Response> put(body, String endpoint) async{
     Response response = await client.put(host + endpoint,
         data: json.encode(body), options: Options(headers: await _buildHeader()));
+    print("\n\n"+endpoint);
     print(response);
     return response;
   }

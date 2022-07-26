@@ -27,6 +27,8 @@ dependencies:
   shimmer: ^2.0.0
   json_serializable: ^6.3.1
   ticket_widget: ^0.0.1
+  firebase_database: ^9.0.19
+  firebase_core: ^1.19.2
 
 
 dev_dependencies: 

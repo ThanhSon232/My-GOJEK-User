@@ -1,4 +1,0 @@
-#Fri Jul 15 16:04:00 ICT 2022
-base.0=/Users/thanhson/Documents/GitHub/my_gojek/build/app/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-renamed.0=classes.dex
-path.0=classes.dex

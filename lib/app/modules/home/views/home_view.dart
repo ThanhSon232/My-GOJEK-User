@@ -67,13 +67,13 @@ class HomeView extends GetView<HomeController> {
               hintStyle: hintSearchText,
               prefixIcon: Icons.search,
               prefixIconColor: Colors.black,
-              onTap: (){
+              onTap: () {
                 // Get.toNamed(Routes.SEARCH_PAGE);
               },
             ),
             actions: [
               GestureDetector(
-                onTap: (){
+                onTap: () {
                   Get.toNamed(Routes.USER);
                 },
                 child: Container(

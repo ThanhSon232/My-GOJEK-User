@@ -1,4 +1,7 @@
-#Wed Jul 20 13:56:05 ICT 2022
+#Tue Jul 26 15:46:52 ICT 2022
+base.1=/Users/thanhson/Documents/GitHub/my_gojek/build/app/intermediates/dex/debug/mergeDexDebug/classes2.dex
+path.1=classes2.dex
 base.0=/Users/thanhson/Documents/GitHub/my_gojek/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
+renamed.1=classes2.dex
 renamed.0=classes.dex
 path.0=classes.dex

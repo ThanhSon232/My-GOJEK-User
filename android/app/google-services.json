@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1077297100095",
+    "firebase_url": "https://uberclone-1707-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "uberclone-1707",
+    "storage_bucket": "uberclone-1707.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1077297100095:android:3de59f8a9c61220b1c0f8a",
+        "android_client_info": {
+          "package_name": "com.example.my_grab"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1077297100095-0qitkmhf77bk72cot62mlroq0r0b6sri.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRO_A7tsID_OjJOwoHCVZN0tWY9Ucd5eE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1077297100095-0qitkmhf77bk72cot62mlroq0r0b6sri.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1077297100095-tddu7v3sqqba8b7bp34gab83iuph9onk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.homework.myGrab"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
