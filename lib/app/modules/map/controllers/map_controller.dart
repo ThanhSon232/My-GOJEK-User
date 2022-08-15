@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:math';
+import 'package:intl/intl.dart';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,6 @@ import 'package:my_grab/app/data/models/vehicle.dart';
 import 'package:my_grab/app/modules/find_transportation/controllers/find_transportation_controller.dart';
 import 'package:my_grab/app/modules/search_page/controllers/search_page_controller.dart';
 import 'package:my_grab/app/modules/user/controllers/user_controller.dart';
-import 'package:intl/intl.dart';
 
 import '../../../data/common/network_handler.dart';
 import '../../../data/common/search_location.dart';
@@ -187,7 +187,7 @@ class MapController extends GetxController {
             l?.lat ?? findTransportationController.map.position.latitude,
             l?.lng ?? findTransportationController.map.position.longitude));
     googleMapController.animateCamera(CameraUpdate.newCameraPosition(
-      CameraPosition(target: LatLng(l!.lat!, l!.lng!), zoom: 15),
+      CameraPosition(target: LatLng(l!.lat!, l.lng!), zoom: 15),
     ));
     markers[MarkerId(id)] = marker;
   }
@@ -292,108 +292,108 @@ class MapController extends GetxController {
     );
   }
 
-  // Future<void> bookingCar() async {
-  //   EasyLoading.show();
-  //   isLoading.value = true;
-  //
-  //   // await apiHandlerImp.put({
-  //   //   "startAddress": {
-  //   //     "address": from?.address,
-  //   //     "longitude": from?.lng,
-  //   //     "latitude": from?.lat
-  //   //   },
-  //   //   "destination": {
-  //   //     "address": to?.address,
-  //   //     "longitude": to?.lng,
-  //   //     "latitude": to?.lat
-  //   //   },
-  //   //   "vehicleAndPrice": {
-  //   //     "vehicleType": vehicleList[selectedIndex.value].type,
-  //   //     "price": vehicleList[selectedIndex.value].price
-  //   //   },
-  //   //   "createdTime":
-  //   //       DateFormat("yyyy-MM-dd HH:mm").format(DateTime.now().toLocal()),
-  //   //   "distanceAndTime": {
-  //   //     "distance": request["distance"],
-  //   //     "timeSecond": request["timeSecond"],
-  //   //   },
-  //   //   "discountId": "",
-  //   //   "note": ""
-  //   // }, "user/${userController.user!.id}/booking");
-  //   Random random = Random();
-  //   int randomNumber = random.nextInt(100);
-  //   isLoading.value = false;
-  //   EasyLoading.dismiss();
-  //
-  //   await FirebaseDatabase.instance
-  //       .ref(
-  //           "${vehicleList[selectedIndex.value].type}/${double.parse(from!.lat!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/${double.parse(from!.lng!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/request")
-  //       .child(userController.user!.id.toString())
-  //       .set({
-  //     "startAddress": {
-  //       "address": from?.address,
-  //       "longitude": from?.lng,
-  //       "latitude": from?.lat
-  //     },
-  //     "destination": {
-  //       "address": to?.address,
-  //       "longitude": to?.lng,
-  //       "latitude": to?.lat
-  //     },
-  //     "vehicleAndPrice": {
-  //       "vehicleType": vehicleList[selectedIndex.value].type,
-  //       "price": vehicleList[selectedIndex.value].price
-  //     },
-  //     "user": userController.user!.toJson(),
-  //     "createdTime":
-  //         DateFormat("yyyy-MM-dd HH:mm").format(DateTime.now().toLocal()),
-  //     "distanceAndTime": {
-  //       "distance": request["distance"],
-  //       "timeSecond": request["timeSecond"],
-  //     },
-  //     "discountId": "",
-  //     "note": ""
-  //   });
-  //
-  //   listener = FirebaseDatabase.instance
-  //       .ref(
-  //           "${vehicleList[selectedIndex.value].type}/${double.parse(from!.lat!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/${double.parse(from!.lng!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/request/${userController.user!.id.toString()}/")
-  //       .child("driver")
-  //       .limitToFirst(1)
-  //       .onChildAdded
-  //       .listen((event) async {
-  //     if (event.snapshot.exists) {
-  //       var data = event.snapshot.value as Map;
-  //       final Marker marker = Marker(
-  //           markerId: const MarkerId("3"),
-  //           icon: mapMarker!,
-  //           position:
-  //               LatLng(data["position"]["lat"], data["position"]["long"]));
-  //       markers[const MarkerId("3")] = marker;
-  //       status.value = STATUS.FOUND;
-  //     }
-  //   });
-  //
-  //   listener1 = FirebaseDatabase.instance
-  //       .ref(
-  //           "${vehicleList[selectedIndex.value].type}/${double.parse(from!.lat!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/${double.parse(from!.lng!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/request/${userController.user!.id.toString()}/driver")
-  //       .onChildChanged
-  //       .listen((event) async {
-  //     if (event.snapshot.exists) {
-  //       var data = event.snapshot.value as Map;
-  //       if(to!.lat!.toStringAsFixed(3) ==  data["position"]["lat"].toStringAsFixed(3)  && to!.lng!.toStringAsFixed(3) == data["position"]["long"].toStringAsFixed(3) ){
-  //         Get.snackbar("Đã", "tới");
-  //         listener1!.cancel();
-  //       }
-  //       final Marker marker = Marker(
-  //           markerId: const MarkerId("3"),
-  //           icon: mapMarker!,
-  //           position:
-  //               LatLng(data["position"]["lat"], data["position"]["long"]));
-  //       markers[const MarkerId("3")] = marker;
-  //     }
-  //   });
-  // }
+  Future<void> bookingCar() async {
+    EasyLoading.show();
+    isLoading.value = true;
+
+    // await apiHandlerImp.put({
+    //   "startAddress": {
+    //     "address": from?.address,
+    //     "longitude": from?.lng,
+    //     "latitude": from?.lat
+    //   },
+    //   "destination": {
+    //     "address": to?.address,
+    //     "longitude": to?.lng,
+    //     "latitude": to?.lat
+    //   },
+    //   "vehicleAndPrice": {
+    //     "vehicleType": vehicleList[selectedIndex.value].type,
+    //     "price": vehicleList[selectedIndex.value].price
+    //   },
+    //   "createdTime":
+    //       DateFormat("yyyy-MM-dd HH:mm").format(DateTime.now().toLocal()),
+    //   "distanceAndTime": {
+    //     "distance": request["distance"],
+    //     "timeSecond": request["timeSecond"],
+    //   },
+    //   "discountId": "",
+    //   "note": ""
+    // }, "user/${userController.user!.id}/booking");
+    Random random = Random();
+    int randomNumber = random.nextInt(100);
+    isLoading.value = false;
+    EasyLoading.dismiss();
+
+    await FirebaseDatabase.instance
+        .ref(
+            "${vehicleList[selectedIndex.value].type}/${double.parse(from!.lat!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/${double.parse(from!.lng!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/request")
+        .child(randomNumber.toString())
+        .set({
+      "startAddress": {
+        "address": from?.address,
+        "longitude": from?.lng,
+        "latitude": from?.lat
+      },
+      "destination": {
+        "address": to?.address,
+        "longitude": to?.lng,
+        "latitude": to?.lat
+      },
+      "vehicleAndPrice": {
+        "vehicleType": vehicleList[selectedIndex.value].type,
+        "price": vehicleList[selectedIndex.value].price
+      },
+      "user": userController.user!.toJson(),
+      "createdTime":
+          DateFormat("yyyy-MM-dd HH:mm").format(DateTime.now().toLocal()),
+      "distanceAndTime": {
+        "distance": request["distance"],
+        "timeSecond": request["timeSecond"],
+      },
+      "discountId": "",
+      "note": ""
+    });
+
+    listener = FirebaseDatabase.instance
+        .ref(
+            "${vehicleList[selectedIndex.value].type}/${double.parse(from!.lat!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/${double.parse(from!.lng!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/request/${userController.user!.id.toString()}/")
+        .child("driver")
+        .limitToFirst(1)
+        .onChildAdded
+        .listen((event) async {
+      if (event.snapshot.exists) {
+        var data = event.snapshot.value as Map;
+        final Marker marker = Marker(
+            markerId: const MarkerId("3"),
+            icon: mapMarker!,
+            position:
+                LatLng(data["position"]["lat"], data["position"]["long"]));
+        markers[const MarkerId("3")] = marker;
+        status.value = STATUS.FOUND;
+      }
+    });
+
+    listener1 = FirebaseDatabase.instance
+        .ref(
+            "${vehicleList[selectedIndex.value].type}/${double.parse(from!.lat!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/${double.parse(from!.lng!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/request/${userController.user!.id.toString()}/driver")
+        .onChildChanged
+        .listen((event) async {
+      if (event.snapshot.exists) {
+        var data = event.snapshot.value as Map;
+        if(to!.lat!.toStringAsFixed(3) ==  data["position"]["lat"].toStringAsFixed(3)  && to!.lng!.toStringAsFixed(3) == data["position"]["long"].toStringAsFixed(3) ){
+          Get.snackbar("Đã", "tới");
+          listener1!.cancel();
+        }
+        final Marker marker = Marker(
+            markerId: const MarkerId("3"),
+            icon: mapMarker!,
+            position:
+                LatLng(data["position"]["lat"], data["position"]["long"]));
+        markers[const MarkerId("3")] = marker;
+      }
+    });
+  }
 
   Future<void> createMarker() async {
     mapMarker = await BitmapDescriptor.fromAssetImage(
@@ -438,15 +438,16 @@ class MapController extends GetxController {
   Future<void> handleVoucher() async {
     isLoading.value = true;
     var vo = await Get.toNamed(Routes.VOUCHER, arguments: {"voucher": voucher});
+
     for (Vehicle v in vehicleList) {
-      Get.log(v.price!);
-      if (v.priceAfterVoucher != "") {
+      if(v.priceAfterVoucher!=""){
         v.price = v.priceAfterVoucher;
         v.priceAfterVoucher = "";
       }
     }
-    status.value = STATUS.HASVOUCHER;
+
     voucher = vo;
+    status.value = STATUS.HASVOUCHER;
     if (vo != null) {
       for (Vehicle v in vehicleList) {
         Get.log(v.price!);
