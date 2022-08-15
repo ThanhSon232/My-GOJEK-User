@@ -45,6 +45,14 @@ class PasswordController extends GetxController {
         "fullName": registerController.nameController.text
       }
     }, "user/signup");
+    print({
+      "username": '0${registerController.phoneNumberController.text}',
+      "password": passwordController.text,
+      "userInfor": {
+        "email":  registerController.emailController.text,
+        "fullName": registerController.nameController.text
+      }
+    });
     isLoading.value = false;
   }
 

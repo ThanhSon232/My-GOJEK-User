@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_grab/app/data/common/api_handler.dart';
 
+import '../../../routes/app_pages.dart';
+
 class RegisterController extends GetxController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   var emailError = ''.obs;
@@ -13,8 +15,9 @@ class RegisterController extends GetxController {
   TextEditingController nameController = TextEditingController();
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
+    await apiHandlerImp.deleteToken();
   }
 
   String? nameValidator(String value) {
@@ -81,6 +84,13 @@ class RegisterController extends GetxController {
     isLoading.value = false;
     phoneNumberError.value = '';
     return true;
+  }
+  
+  getOTP() async{
+    // var response = await apiHandlerImp.get("sendOTP", {
+    //   "username": '0${phoneNumberController.text}'
+    // });
+    Get.toNamed(Routes.OTP);
   }
 
   @override

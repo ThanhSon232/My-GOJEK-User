@@ -19,7 +19,6 @@ class FindTransportationController extends GetxController {
   @override
   void onInit() async{
     super.onInit();
-    // print("find: " + passwordController);
     isLoading.value = true;
     scrollController.addListener(() {
       scrollPosition.value = scrollController.position.pixels;

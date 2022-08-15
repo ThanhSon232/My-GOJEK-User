@@ -30,7 +30,7 @@ class FindTransportationBox extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       padding: const EdgeInsets.all(10),
-      height: height * 0.5,
+      height: height * 0.6,
       width: MediaQuery.of(context).size.width * 0.85,
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(16)),

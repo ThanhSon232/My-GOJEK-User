@@ -5,6 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:my_grab/app/data/common/bottom_sheets.dart';
 import 'package:my_grab/app/data/common/util.dart';
 
+import '../../../data/models/vehicle.dart';
 import '../../../routes/app_pages.dart';
 import '../controllers/map_controller.dart';
 
@@ -21,6 +22,8 @@ class MapView extends GetView<MapController> {
             polylines: controller.polyline.toSet(),
             mapType: MapType.normal,
             myLocationButtonEnabled: false,
+            zoomControlsEnabled: true,
+            zoomGesturesEnabled: true,
             myLocationEnabled: true,
             onMapCreated: (GoogleMapController control) {
               controller.isLoading.value = true;
@@ -48,15 +51,19 @@ class MapView extends GetView<MapController> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  roundedButton(
-                      icon: Icons.arrow_back,
-                      f: () {
-                       if(controller.status.value == STATUS.FINDING){
-                         controller.handleBackButton();
-                       } else {
-                         Get.back();
-                       }
-                      }),
+                  Visibility(
+                    visible:
+                        controller.status.value != STATUS.FOUND ? true : false,
+                    child: roundedButton(
+                        icon: Icons.arrow_back,
+                        f: () {
+                          if (controller.status.value == STATUS.FINDING) {
+                            controller.handleBackButton();
+                          } else {
+                            Get.back();
+                          }
+                        }),
+                  ),
                   roundedButton(
                       icon: Icons.navigation,
                       f: () async {
@@ -70,7 +77,10 @@ class MapView extends GetView<MapController> {
             ),
             Obx(
               () => AnimatedContainer(
-                  height: controller.pass.value ? height * 0.42 : height * 0.3,
+                  height: controller.pass.value &&
+                          controller.status.value != STATUS.FOUND
+                      ? height * 0.42
+                      : height * 0.25,
                   width: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.symmetric(
                       vertical: 20,
@@ -95,14 +105,108 @@ class MapView extends GetView<MapController> {
                           child: CircularProgressIndicator(),
                         )
                       : controller.pass.value
-                          ? (controller.status.value == STATUS.SELECTVEHICLE
+                          ? (controller.status.value == STATUS.SELECTVEHICLE ||
+                                  controller.status.value == STATUS.HASVOUCHER
                               ? selectVehicle(
                                   context: context, textTheme: textTheme)
-                              : findingDriver(textTheme: textTheme))
+                              : controller.status.value == STATUS.FINDING
+                                  ? findingDriver(textTheme: textTheme)
+                                  : foundDriver(textTheme: textTheme))
                           : searchContainer(textTheme)),
             )
           ],
         ));
+  }
+
+  Widget foundDriver({required TextTheme textTheme}) {
+    return Obx(
+      () => controller.isLoading.value
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Your driver is coming",
+                    style: textTheme.headline1!.copyWith(fontSize: 13),
+                  ),
+                  Text(
+                    "Never go on a bike which doesn't match the information",
+                    style: textTheme.headline2!
+                        .copyWith(fontSize: 11, color: Colors.grey),
+                  ),
+                  SizedBox(
+                    height: 100,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      elevation: 2,
+                      color: Colors.grey[100],
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ClipOval(
+                                  child: SizedBox.fromSize(
+                                    size: const Size.fromRadius(
+                                        30), // Image radius
+                                    child: Image.asset("assets/face.png",
+                                        fit: BoxFit.cover),
+                                  ),
+                                ),
+                                Text(
+                                  "Tran Thanh Son",
+                                  style: textTheme.headline2!
+                                      .copyWith(fontSize: 12),
+                                ),
+                              ],
+                            ),
+                            const Spacer(),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Text(
+                                  "60B3-123456",
+                                  style: textTheme.headline1!
+                                      .copyWith(fontSize: 16),
+                                ),
+                                Text(
+                                  "Sirius",
+                                  style: textTheme.headline2!
+                                      .copyWith(fontSize: 16),
+                                ),
+                                Text(
+                                  "0912357990",
+                                  style: textTheme.headline2!
+                                      .copyWith(fontSize: 16),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: Get.width,
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(primary: Colors.green),
+                        onPressed: () {},
+                        child: const Text("Call driver")),
+                  )
+                ],
+              ),
+            ),
+    );
   }
 
   Widget findingDriver({required TextTheme textTheme}) {
@@ -280,7 +384,25 @@ class MapView extends GetView<MapController> {
                           ),
                           Text(
                             "${controller.vehicleList[itemBuilder].seatNumber!} seaters",
-                          )
+                          ),
+                          const Spacer(),
+                          Visibility(
+                            visible: controller.vehicleList[itemBuilder]
+                                        .priceAfterVoucher !=
+                                    ""
+                                ? true
+                                : false,
+                            child: Text(
+                              controller.vehicleList[itemBuilder]
+                                          .priceAfterVoucher !=
+                                      ""
+                                  ? "${formatBalance.format(double.parse(controller.vehicleList[itemBuilder].priceAfterVoucher!))}đ"
+                                  : "",
+                              style: const TextStyle(
+                                  fontSize: 12,
+                                  decoration: TextDecoration.lineThrough),
+                            ),
+                          ),
                         ],
                       ),
                       onTap: () async {
@@ -292,7 +414,7 @@ class MapView extends GetView<MapController> {
                 }),
       ),
       bottomSheet: Container(
-        height: Get.height * 0.14,
+        height: Get.height * 0.16,
         width: Get.width,
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
@@ -352,8 +474,8 @@ class MapView extends GetView<MapController> {
                             ),
                             primary: Colors.white,
                             elevation: 0),
-                        onPressed: () {
-                          Get.toNamed(Routes.VOUCHER);
+                        onPressed: () async {
+                          await controller.handleVoucher();
                         },
                         child: Text(
                           "Voucher",
@@ -364,13 +486,14 @@ class MapView extends GetView<MapController> {
             const Spacer(),
             SizedBox(
                 width: double.infinity,
+                height: 40,
                 child: IgnorePointer(
                   ignoring: controller.isLoading.value,
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(primary: Colors.green),
                       onPressed: () async {
                         controller.status.value = STATUS.FINDING;
-                        await controller.bookingCar();
+                        // await controller.bookingCar();
                       },
                       child: const Text("Order")),
                 )),

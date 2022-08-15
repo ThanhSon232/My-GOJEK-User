@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../models/voucher/voucher.dart';
 
 class TicketView extends StatelessWidget {
-  const TicketView({Key? key}) : super(key: key);
+  final Voucher voucher;
+  final bool selected;
+
+  const TicketView({Key? key, required this.voucher, required this.selected}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,13 +36,21 @@ class TicketView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Text(
-                    "7.000VND discount",
+                    "${voucher.discountName} discount",
                     style: textTheme.headline1!.copyWith(fontSize: 18),
                   ),
-                  Text(
-                    "Final trip fare: 8.000VND",
-                    style: textTheme.headline2,
-                  )
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Discount percent: ${voucher.discountPercent}",
+                          style: textTheme.headline2,
+                        ),
+                        Text(
+                          "Quantity: ${voucher.quantity}",
+                          style: textTheme.headline2,
+                        ),
+                      ])
                 ],
               ),
             ),
@@ -67,14 +81,14 @@ class TicketView extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: List.generate(
                               (constraints.constrainWidth() / 10).floor(),
-                                  (index) => SizedBox(
-                                height: 1,
-                                width: 5,
-                                child: DecoratedBox(
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey.shade400),
-                                ),
-                              )),
+                              (index) => SizedBox(
+                                    height: 1,
+                                    width: 5,
+                                    child: DecoratedBox(
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey.shade400),
+                                    ),
+                                  )),
                         );
                       },
                     ),
@@ -140,7 +154,7 @@ class TicketView extends StatelessWidget {
                     size: 10,
                   ),
                   Text(
-                    "Voucher expires on 27-07-22",
+                    "Voucher expires on ${voucher.endDate}",
                     style: textTheme.headline3!.copyWith(fontSize: 9),
                   ),
                   const Spacer(),
@@ -153,11 +167,18 @@ class TicketView extends StatelessWidget {
                                   color: Colors.green,
                                 ),
                               ),
-                              primary: Colors.white,
+                              primary: selected ? Colors.grey : Colors.white,
                               elevation: 0),
-                          onPressed: () {},
+                          onPressed: () {
+                            if(selected){
+                              Get.back(result: null);
+                            }
+                            else {
+                              Get.back(result: voucher);
+                            }
+                          },
                           child: Text(
-                            "Apply",
+                            selected ? "Remove" : "Apply",
                             style: textTheme.headline2,
                           )))
                 ],

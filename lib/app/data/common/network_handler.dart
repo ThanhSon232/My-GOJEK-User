@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:http/http.dart' as http;
 class NetworkHandler{
   static var host = "http://api.map4d.vn/sdk/";

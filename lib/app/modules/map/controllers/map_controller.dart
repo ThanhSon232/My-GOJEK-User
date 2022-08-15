@@ -18,6 +18,8 @@ import 'package:intl/intl.dart';
 
 import '../../../data/common/network_handler.dart';
 import '../../../data/common/search_location.dart';
+import '../../../data/models/voucher/voucher.dart';
+import '../../../routes/app_pages.dart';
 
 class MapController extends GetxController {
   var id = 0;
@@ -33,6 +35,8 @@ class MapController extends GetxController {
   Rx<STATUS> status = STATUS.SELECTVEHICLE.obs;
   RxString text = "Your current location".obs;
   var selectedIndex = 0.obs;
+  BitmapDescriptor? mapMarker;
+  Voucher? voucher;
 
   List<Vehicle> vehicleList = [
     Vehicle(
@@ -101,6 +105,7 @@ class MapController extends GetxController {
         lng: findTransportationController.position["longitude"]);
 
     await getAddress(from);
+    await createMarker();
 
     to = Location(
         lat: findTransportationController.position["latitude"],
@@ -270,7 +275,7 @@ class MapController extends GetxController {
         CameraPosition(
             target: LatLng(
                 (from!.lat! + to!.lat!) / 2, (from!.lng! + to!.lng!) / 2),
-            zoom: 12.5),
+            zoom: 15),
       ));
     }
   }
@@ -287,127 +292,112 @@ class MapController extends GetxController {
     );
   }
 
-  Future<void> bookingCar() async {
-    EasyLoading.show();
-    isLoading.value = true;
+  // Future<void> bookingCar() async {
+  //   EasyLoading.show();
+  //   isLoading.value = true;
+  //
+  //   // await apiHandlerImp.put({
+  //   //   "startAddress": {
+  //   //     "address": from?.address,
+  //   //     "longitude": from?.lng,
+  //   //     "latitude": from?.lat
+  //   //   },
+  //   //   "destination": {
+  //   //     "address": to?.address,
+  //   //     "longitude": to?.lng,
+  //   //     "latitude": to?.lat
+  //   //   },
+  //   //   "vehicleAndPrice": {
+  //   //     "vehicleType": vehicleList[selectedIndex.value].type,
+  //   //     "price": vehicleList[selectedIndex.value].price
+  //   //   },
+  //   //   "createdTime":
+  //   //       DateFormat("yyyy-MM-dd HH:mm").format(DateTime.now().toLocal()),
+  //   //   "distanceAndTime": {
+  //   //     "distance": request["distance"],
+  //   //     "timeSecond": request["timeSecond"],
+  //   //   },
+  //   //   "discountId": "",
+  //   //   "note": ""
+  //   // }, "user/${userController.user!.id}/booking");
+  //   Random random = Random();
+  //   int randomNumber = random.nextInt(100);
+  //   isLoading.value = false;
+  //   EasyLoading.dismiss();
+  //
+  //   await FirebaseDatabase.instance
+  //       .ref(
+  //           "${vehicleList[selectedIndex.value].type}/${double.parse(from!.lat!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/${double.parse(from!.lng!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/request")
+  //       .child(userController.user!.id.toString())
+  //       .set({
+  //     "startAddress": {
+  //       "address": from?.address,
+  //       "longitude": from?.lng,
+  //       "latitude": from?.lat
+  //     },
+  //     "destination": {
+  //       "address": to?.address,
+  //       "longitude": to?.lng,
+  //       "latitude": to?.lat
+  //     },
+  //     "vehicleAndPrice": {
+  //       "vehicleType": vehicleList[selectedIndex.value].type,
+  //       "price": vehicleList[selectedIndex.value].price
+  //     },
+  //     "user": userController.user!.toJson(),
+  //     "createdTime":
+  //         DateFormat("yyyy-MM-dd HH:mm").format(DateTime.now().toLocal()),
+  //     "distanceAndTime": {
+  //       "distance": request["distance"],
+  //       "timeSecond": request["timeSecond"],
+  //     },
+  //     "discountId": "",
+  //     "note": ""
+  //   });
+  //
+  //   listener = FirebaseDatabase.instance
+  //       .ref(
+  //           "${vehicleList[selectedIndex.value].type}/${double.parse(from!.lat!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/${double.parse(from!.lng!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/request/${userController.user!.id.toString()}/")
+  //       .child("driver")
+  //       .limitToFirst(1)
+  //       .onChildAdded
+  //       .listen((event) async {
+  //     if (event.snapshot.exists) {
+  //       var data = event.snapshot.value as Map;
+  //       final Marker marker = Marker(
+  //           markerId: const MarkerId("3"),
+  //           icon: mapMarker!,
+  //           position:
+  //               LatLng(data["position"]["lat"], data["position"]["long"]));
+  //       markers[const MarkerId("3")] = marker;
+  //       status.value = STATUS.FOUND;
+  //     }
+  //   });
+  //
+  //   listener1 = FirebaseDatabase.instance
+  //       .ref(
+  //           "${vehicleList[selectedIndex.value].type}/${double.parse(from!.lat!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/${double.parse(from!.lng!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/request/${userController.user!.id.toString()}/driver")
+  //       .onChildChanged
+  //       .listen((event) async {
+  //     if (event.snapshot.exists) {
+  //       var data = event.snapshot.value as Map;
+  //       if(to!.lat!.toStringAsFixed(3) ==  data["position"]["lat"].toStringAsFixed(3)  && to!.lng!.toStringAsFixed(3) == data["position"]["long"].toStringAsFixed(3) ){
+  //         Get.snackbar("Đã", "tới");
+  //         listener1!.cancel();
+  //       }
+  //       final Marker marker = Marker(
+  //           markerId: const MarkerId("3"),
+  //           icon: mapMarker!,
+  //           position:
+  //               LatLng(data["position"]["lat"], data["position"]["long"]));
+  //       markers[const MarkerId("3")] = marker;
+  //     }
+  //   });
+  // }
 
-    // await apiHandlerImp.put({
-    //   "startAddress": {
-    //     "address": from?.address,
-    //     "longitude": from?.lng,
-    //     "latitude": from?.lat
-    //   },
-    //   "destination": {
-    //     "address": to?.address,
-    //     "longitude": to?.lng,
-    //     "latitude": to?.lat
-    //   },
-    //   "vehicleAndPrice": {
-    //     "vehicleType": vehicleList[selectedIndex.value].type,
-    //     "price": vehicleList[selectedIndex.value].price
-    //   },
-    //   "createdTime":
-    //       DateFormat("yyyy-MM-dd HH:mm").format(DateTime.now().toLocal()),
-    //   "distanceAndTime": {
-    //     "distance": request["distance"],
-    //     "timeSecond": request["timeSecond"],
-    //   },
-    //   "discountId": "",
-    //   "note": ""
-    // }, "user/${userController.user!.id}/booking");
-    Random random = Random();
-    int randomNumber = random.nextInt(100);
-    isLoading.value = false;
-    // await FirebaseDatabase.instance
-    //     .ref(
-    //         "${vehicleList[selectedIndex.value].type}/${double.parse(10.768709.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/${double.parse(106.667423.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/driverList")
-    //     .child(randomNumber.toString())
-    //     .set({
-    //   "startAddress": {
-    //     "address": from?.address,
-    //     "longitude": from?.lng,
-    //     "latitude": from?.lat
-    //   },
-    //   "destination": {
-    //     "address": to?.address,
-    //     "longitude": to?.lng,
-    //     "latitude": to?.lat
-    //   },
-    //   "vehicleAndPrice": {
-    //     "vehicleType": vehicleList[selectedIndex.value].type,
-    //     "price": vehicleList[selectedIndex.value].price
-    //   },
-    //   "user": userController.user!.toJson(),
-    //   "createdTime":
-    //       DateFormat("yyyy-MM-dd HH:mm").format(DateTime.now().toLocal()),
-    //   "distanceAndTime": {
-    //     "distance": request["distance"],
-    //     "timeSecond": request["timeSecond"],
-    //   },
-    //   "discountId": "",
-    //   "note": ""
-    // });
-    showSnackBar("Đặt xe thành công", "Đợi tí có người đón liền");
-    EasyLoading.dismiss();
-
-    await FirebaseDatabase.instance
-        .ref(
-            "${vehicleList[selectedIndex.value].type}/${double.parse(10.768709.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/${double.parse(106.667423.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/request")
-        .child(userController.user!.id.toString())
-        .set({
-      "startAddress": {
-        "address": from?.address,
-        "longitude": from?.lng,
-        "latitude": from?.lat
-      },
-      "destination": {
-        "address": to?.address,
-        "longitude": to?.lng,
-        "latitude": to?.lat
-      },
-      "vehicleAndPrice": {
-        "vehicleType": vehicleList[selectedIndex.value].type,
-        "price": vehicleList[selectedIndex.value].price
-      },
-      "user": userController.user!.toJson(),
-      "createdTime":
-          DateFormat("yyyy-MM-dd HH:mm").format(DateTime.now().toLocal()),
-      "distanceAndTime": {
-        "distance": request["distance"],
-        "timeSecond": request["timeSecond"],
-      },
-      "discountId": "",
-      "note": ""
-    });
-
-    listener = FirebaseDatabase.instance
-        .ref(
-            "${vehicleList[selectedIndex.value].type}/${double.parse(10.768517.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/${double.parse(106.669975.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/request/")
-        .limitToFirst(1)
-        .onChildAdded
-        .listen((event) {
-      if (event.snapshot.exists) {
-        // showSnackBar("Đang có chuyến", "Đang có chuyến");
-        print(event.snapshot.value);
-      }
-    });
-
-    listener1 = FirebaseDatabase.instance
-        .ref(
-            "${vehicleList[selectedIndex.value].type}/${double.parse(10.768517.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/${double.parse(106.669975.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/request/${userController.user!.id.toString()}/driver")
-        .limitToFirst(1)
-        .onChildAdded
-        .listen((event) {
-      if (event.snapshot.exists) {
-        Get.defaultDialog(
-          title: "GeeksforGeeks",
-          middleText: "Hello world!",
-          backgroundColor: Colors.green,
-          titleStyle: const TextStyle(color: Colors.white),
-          middleTextStyle: const TextStyle(color: Colors.white),
-        );
-      }
-    });
+  Future<void> createMarker() async {
+    mapMarker = await BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(), "assets/vehicle_icons/car_icon.png");
   }
 
   Future<void> handleBackButton() async {
@@ -435,17 +425,42 @@ class MapController extends GetxController {
 
     await FirebaseDatabase.instance
         .ref(
-            "${vehicleList[selectedIndex.value].type}/${double.parse(10.768517.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/${double.parse(106.669975.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/request/${userController.user!.id.toString()}")
+            "${vehicleList[selectedIndex.value].type}/${double.parse(from!.lat!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/${double.parse(from!.lng!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/request/${userController.user!.id.toString()}")
         .remove();
-    showSnackBar("Đã huỷ chuyến", "Đã huỷ chuyến");
     isLoading.value = false;
     status.value = STATUS.SELECTVEHICLE;
     listener!.cancel();
     listener1!.cancel();
+
     EasyLoading.dismiss();
+  }
+
+  Future<void> handleVoucher() async {
+    isLoading.value = true;
+    var vo = await Get.toNamed(Routes.VOUCHER, arguments: {"voucher": voucher});
+    for (Vehicle v in vehicleList) {
+      Get.log(v.price!);
+      if (v.priceAfterVoucher != "") {
+        v.price = v.priceAfterVoucher;
+        v.priceAfterVoucher = "";
+      }
+    }
+    status.value = STATUS.HASVOUCHER;
+    voucher = vo;
+    if (vo != null) {
+      for (Vehicle v in vehicleList) {
+        Get.log(v.price!);
+        v.priceAfterVoucher = v.price;
+        v.price = (double.parse(v.price!) -
+                double.parse(v.price!) * voucher!.discountPercent!)
+            .toString();
+        Get.log(v.price!);
+      }
+    }
+    isLoading.value = false;
   }
 }
 
 enum TYPES { SELECTLOCATION, SELECTEVIAMAP, SELECTDESTINATION, HASBOTH }
 
-enum STATUS { SELECTVEHICLE, FINDING, FOUND, CANCEL }
+enum STATUS { SELECTVEHICLE, HASVOUCHER, FINDING, FOUND, COMPLETED, CANCEL }

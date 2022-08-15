@@ -15,6 +15,7 @@ abstract class Routes {
   static const SEARCH_PAGE = _Paths.SEARCH_PAGE;
   static const USER = _Paths.USER;
   static const VOUCHER = _Paths.VOUCHER;
+  static const OTP = _Paths.OTP;
 }
 
 abstract class _Paths {
@@ -31,4 +32,5 @@ abstract class _Paths {
   static const SEARCH_PAGE = '/search-page';
   static const USER = '/user';
   static const VOUCHER = '/voucher';
+  static const OTP = '/otp';
 }

@@ -10,19 +10,19 @@
 		</data>
 		<key>flutter_assets/AssetManifest.json</key>
 		<data>
-		h0Ja5zVgeJTOEdGaFqGhaRhoAU4=
+		AH+tYqzQfVqTE9Mi7zMXxba5l0Y=
 		</data>
 		<key>flutter_assets/FontManifest.json</key>
 		<data>
-		vKJkVIcw+LGHFnKJGwrQwCREv68=
+		Z2ke7TPdGSIzyVXDujsbZE0e5y8=
 		</data>
 		<key>flutter_assets/NOTICES.Z</key>
 		<data>
-		BvaRosQMDkWFc1V0v/WQufuJ0ZU=
+		od/G89JClbEnpXT5C1OH34pLco0=
 		</data>
 		<key>flutter_assets/assets/.DS_Store</key>
 		<data>
-		wsK81TWlP2IIYeHRNz13fvi8kS8=
+		ioQ1sGtOwRfetRY9X6vWPUEJROI=
 		</data>
 		<key>flutter_assets/assets/background_find_transportation.png</key>
 		<data>
@@ -56,6 +56,10 @@
 		<data>
 		z4LbjYTQ2Pw5dY6cvBFvBvAzKVQ=
 		</data>
+		<key>flutter_assets/assets/face.png</key>
+		<data>
+		6xEdmKueDtu3TyQ80D5Hb90TsAY=
+		</data>
 		<key>flutter_assets/assets/find_transportation.png</key>
 		<data>
 		dCNOA1HrmvGo2EFjMozy2z0FA2c=
@@ -71,6 +75,10 @@
 		<key>flutter_assets/assets/icon_account.png</key>
 		<data>
 		mxQYnQmOEkrA6UMO7iUtoHQ3fQw=
+		</data>
+		<key>flutter_assets/assets/img.png</key>
+		<data>
+		YdQ6/JGflhqFC1diHjr6XS884cE=
 		</data>
 		<key>flutter_assets/assets/logo_gojek.png</key>
 		<data>
@@ -152,6 +160,14 @@
 		<data>
 		SGLJMsFeVOmAIj2T1FpOpo/1pr8=
 		</data>
+		<key>flutter_assets/assets/vehicle_icons/car_icon.png</key>
+		<data>
+		mRnGZgRsbw6UxiqxBRfSwzfD4Fs=
+		</data>
+		<key>flutter_assets/assets/vehicle_icons/motorbike.png</key>
+		<data>
+		XrNtJt7DRDDgZOFr8vexrD/uaWg=
+		</data>
 		<key>flutter_assets/assets/vehicles/car.png</key>
 		<data>
 		qb+j4f9M6gEI8aoGPfDGSRyzxmw=
@@ -170,11 +186,35 @@
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
-		MJrxZ1FtNx3EbJnBUHvgM6n0MgM=
+		vLG9Fp5XirafRfdFRlLJA31v5FU=
 		</data>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
 		P7bb/oR3EhwqCIH1M6LyTuBIWYU=
+		</data>
+		<key>flutter_assets/packages/flutter_credit_card/font/halter.ttf</key>
+		<data>
+		f0f7HY52Y/z+wr8EoDxQDd8vi2Q=
+		</data>
+		<key>flutter_assets/packages/flutter_credit_card/icons/amex.png</key>
+		<data>
+		tibA4tAJazw6VclrtMs/zJMNSmc=
+		</data>
+		<key>flutter_assets/packages/flutter_credit_card/icons/chip.png</key>
+		<data>
+		f7LWq07RkqmfHOdLvvlF3AAGLqE=
+		</data>
+		<key>flutter_assets/packages/flutter_credit_card/icons/discover.png</key>
+		<data>
+		MjfpsfZga+aKTAssHMhanH8+hAE=
+		</data>
+		<key>flutter_assets/packages/flutter_credit_card/icons/mastercard.png</key>
+		<data>
+		iGTGZszT8F4nOPpehyeMN19v6Lg=
+		</data>
+		<key>flutter_assets/packages/flutter_credit_card/icons/visa.png</key>
+		<data>
+		IgZRY6jNkEutEdI2XuCftt4VibQ=
 		</data>
 		<key>flutter_assets/vm_snapshot_data</key>
 		<data>
@@ -187,33 +227,33 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			h0Ja5zVgeJTOEdGaFqGhaRhoAU4=
+			AH+tYqzQfVqTE9Mi7zMXxba5l0Y=
 			</data>
 			<key>hash2</key>
 			<data>
-			ag7MOEfjPjVu/WxnpXKcf8ONJMTFFYZw3pEle322inQ=
+			YIVU7OyExsDGyxZC4rquexLzIWK2k0t0CMOQBQwdwIY=
 			</data>
 		</dict>
 		<key>flutter_assets/FontManifest.json</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			vKJkVIcw+LGHFnKJGwrQwCREv68=
+			Z2ke7TPdGSIzyVXDujsbZE0e5y8=
 			</data>
 			<key>hash2</key>
 			<data>
-			zX4DZFvESy3Ue3y2JvUcTsv1Whl6t3JBYotHrBZfviE=
+			dRzuis1dtD5Bica2gskARg6bvBSGIG+5xog6vr/U2Kg=
 			</data>
 		</dict>
 		<key>flutter_assets/NOTICES.Z</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			BvaRosQMDkWFc1V0v/WQufuJ0ZU=
+			od/G89JClbEnpXT5C1OH34pLco0=
 			</data>
 			<key>hash2</key>
 			<data>
-			nK23vP5EVGAoyUkZWS/NDWPEyvgAPGVtmk2URI4qpbM=
+			bm2MV8kiTMOImHnWcxYz0ouhRUgrneaZV5AfCkTZnuY=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/background_find_transportation.png</key>
@@ -304,6 +344,17 @@
 			AZTXYYFU3RaQZCvfLpRhpfV5QHWzfk0xfvxsEL9z/HU=
 			</data>
 		</dict>
+		<key>flutter_assets/assets/face.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			6xEdmKueDtu3TyQ80D5Hb90TsAY=
+			</data>
+			<key>hash2</key>
+			<data>
+			RKUB+58npqGBuxN/EVsEeBjWJc1xqTf3xKii0EHYHMg=
+			</data>
+		</dict>
 		<key>flutter_assets/assets/find_transportation.png</key>
 		<dict>
 			<key>hash</key>
@@ -346,6 +397,17 @@
 			<key>hash2</key>
 			<data>
 			BxN9A0468DD3LdnEvIXTokeLhMXf/A2LacVfpJoVsYM=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/img.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			YdQ6/JGflhqFC1diHjr6XS884cE=
+			</data>
+			<key>hash2</key>
+			<data>
+			ComHtho42BA3Q1hoaT4tKfK1ReREMTEJqgYAUJFyzK4=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/logo_gojek.png</key>
@@ -557,6 +619,28 @@
 			6nJkz86hsFwBNjL60PQMBhpRSQgMXlQXFF8luTPwOxQ=
 			</data>
 		</dict>
+		<key>flutter_assets/assets/vehicle_icons/car_icon.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			mRnGZgRsbw6UxiqxBRfSwzfD4Fs=
+			</data>
+			<key>hash2</key>
+			<data>
+			45Wsmi1fFQ0CSMv4kdnrhn9R/U6SxJv00VO8ryEhCkk=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/vehicle_icons/motorbike.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			XrNtJt7DRDDgZOFr8vexrD/uaWg=
+			</data>
+			<key>hash2</key>
+			<data>
+			gs9P/z/sj6UcgbkXuoYcouWhBndXy3WvOELwA8FcZyA=
+			</data>
+		</dict>
 		<key>flutter_assets/assets/vehicles/car.png</key>
 		<dict>
 			<key>hash</key>
@@ -605,11 +689,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			MJrxZ1FtNx3EbJnBUHvgM6n0MgM=
+			vLG9Fp5XirafRfdFRlLJA31v5FU=
 			</data>
 			<key>hash2</key>
 			<data>
-			9V46efm7wsLAW3T3xq7lzmC+OIyI7NWzC2JX5//N/5I=
+			Ymp9UMzUNnRis2uzY1ZLZ56nw+WH1vmhQLaIiyc9bYM=
 			</data>
 		</dict>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
@@ -621,6 +705,72 @@
 			<key>hash2</key>
 			<data>
 			x6NX+tjyECiQtyzbbjyY8U2zoZ7GDbJtE+T+k/dzgI0=
+			</data>
+		</dict>
+		<key>flutter_assets/packages/flutter_credit_card/font/halter.ttf</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			f0f7HY52Y/z+wr8EoDxQDd8vi2Q=
+			</data>
+			<key>hash2</key>
+			<data>
+			mFRgChob2tVvyDDFaNctGEivOTLBWAmJjHBYEt7v+Fg=
+			</data>
+		</dict>
+		<key>flutter_assets/packages/flutter_credit_card/icons/amex.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			tibA4tAJazw6VclrtMs/zJMNSmc=
+			</data>
+			<key>hash2</key>
+			<data>
+			AHlgOdky6ferhO1MJE533dn5ajtAYa05sVzs/kvlGhU=
+			</data>
+		</dict>
+		<key>flutter_assets/packages/flutter_credit_card/icons/chip.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			f7LWq07RkqmfHOdLvvlF3AAGLqE=
+			</data>
+			<key>hash2</key>
+			<data>
+			LMxAletOxblEUTSEHMCcNmHv1+xafdf+SbkyI0xElME=
+			</data>
+		</dict>
+		<key>flutter_assets/packages/flutter_credit_card/icons/discover.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			MjfpsfZga+aKTAssHMhanH8+hAE=
+			</data>
+			<key>hash2</key>
+			<data>
+			xgAnHU4cvaUf+t1SL9lKKJ6jbddjTCDJjwg1rYOe05o=
+			</data>
+		</dict>
+		<key>flutter_assets/packages/flutter_credit_card/icons/mastercard.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			iGTGZszT8F4nOPpehyeMN19v6Lg=
+			</data>
+			<key>hash2</key>
+			<data>
+			SfN6vMHxyPEgcbXPpdTzCodd9sjLCEvUSbSnS12OpR4=
+			</data>
+		</dict>
+		<key>flutter_assets/packages/flutter_credit_card/icons/visa.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			IgZRY6jNkEutEdI2XuCftt4VibQ=
+			</data>
+			<key>hash2</key>
+			<data>
+			gMuV0z3N776cX+nZExZvQ80hUibF8+RhajQy+jgL6LY=
 			</data>
 		</dict>
 		<key>flutter_assets/vm_snapshot_data</key>

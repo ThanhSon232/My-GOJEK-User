@@ -12,7 +12,7 @@ StickyHeader sticky({required BuildContext context,required String title, String
             style: textTheme.headline1!.copyWith(fontSize: 12),
           ),
           Text(
-            "subtitle" ?? "",
+            "subtitle",
             style: textTheme.headline2!,
           ),
         ],

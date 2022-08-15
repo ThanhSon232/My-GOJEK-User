@@ -8,6 +8,8 @@ import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/map/bindings/map_binding.dart';
 import '../modules/map/views/map_view.dart';
+import '../modules/otp/bindings/otp_binding.dart';
+import '../modules/otp/views/otp_view.dart';
 import '../modules/password/bindings/password_binding.dart';
 import '../modules/password/views/password_view.dart';
 import '../modules/password_login/bindings/password_login_binding.dart';
@@ -67,20 +69,20 @@ class AppPages {
         name: _Paths.HOME,
         page: () => const HomeView(),
         binding: HomeBinding(),
-      bindings: [
-        // FindTransportationBinding(),
-        // SearchPageBinding()
-      ]
-    ),
+        bindings: [
+          // FindTransportationBinding(),
+          // SearchPageBinding()
+        ]),
     GetPage(
         name: _Paths.FIND_TRANSPORTATION,
         page: () => const FindTransportationView(),
         binding: FindTransportationBinding(),
         bindings: [UserBinding()]),
     GetPage(
-        name: _Paths.MAP, page: () => const MapView(), binding: MapBinding(),
-        bindings: [UserBinding()]
-    ),
+        name: _Paths.MAP,
+        page: () => const MapView(),
+        binding: MapBinding(),
+        bindings: [UserBinding()]),
     GetPage(
       name: _Paths.SEARCH_PAGE,
       page: () => const SearchPageView(),
@@ -96,5 +98,10 @@ class AppPages {
       page: () => const VoucherView(),
       binding: VoucherBinding(),
     ),
+    GetPage(
+        name: _Paths.OTP,
+        page: () => const OtpView(),
+        binding: OtpBinding(),
+        bindings: [RegisterBinding()]),
   ];
 }

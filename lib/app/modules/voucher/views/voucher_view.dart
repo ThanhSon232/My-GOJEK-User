@@ -75,14 +75,20 @@ class VoucherView extends GetView<VoucherController> {
                         "Available vouchers",
                         style: textTheme.headline1!.copyWith(fontSize: 15),
                       ),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        padding: const EdgeInsets.only(bottom: 120),
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (_, itemBuilder) {
-                          return const TicketView();
-                        },
-                        itemCount: 10,
+                      Obx(() => controller.isLoading.value ? const Center(child: CircularProgressIndicator(),) : ListView.builder(
+                            shrinkWrap: true,
+                            padding: const EdgeInsets.only(bottom: 120),
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (_, itemBuilder) {
+                              if(controller.selectedVoucher != null){
+                                if(controller.vouchers[itemBuilder].discountId == controller.selectedVoucher!.discountId!) {
+                                  return TicketView(voucher: controller.vouchers[itemBuilder], selected: true);
+                                }
+                              }
+                              return TicketView(voucher: controller.vouchers[itemBuilder], selected: false);
+                            },
+                            itemCount: controller.vouchers.length,
+                          ),
                       ),
                     ],
                   ),

@@ -162,20 +162,45 @@
 110-->[com.google.android.gms:play-services-maps:18.0.2] /Users/thanhson/.gradle/caches/transforms-3/95f836bc5966badd1250ea9af0d4d03d/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:41:13-37
 111
 112        <activity
-112-->[com.google.android.gms:play-services-base:18.0.1] /Users/thanhson/.gradle/caches/transforms-3/19fea4fb28dedd992824e13cc158e7a1/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:9-22:45
-113            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-113-->[com.google.android.gms:play-services-base:18.0.1] /Users/thanhson/.gradle/caches/transforms-3/19fea4fb28dedd992824e13cc158e7a1/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:19-85
-114            android:exported="false"
-114-->[com.google.android.gms:play-services-base:18.0.1] /Users/thanhson/.gradle/caches/transforms-3/19fea4fb28dedd992824e13cc158e7a1/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:22:19-43
-115            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-115-->[com.google.android.gms:play-services-base:18.0.1] /Users/thanhson/.gradle/caches/transforms-3/19fea4fb28dedd992824e13cc158e7a1/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:21:19-78
-116
-117        <meta-data
-117-->[com.google.android.gms:play-services-basement:18.0.0] /Users/thanhson/.gradle/caches/transforms-3/19a0dfd4021b70333b258b23187eb758/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:21:9-23:69
-118            android:name="com.google.android.gms.version"
-118-->[com.google.android.gms:play-services-basement:18.0.0] /Users/thanhson/.gradle/caches/transforms-3/19a0dfd4021b70333b258b23187eb758/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:22:13-58
-119            android:value="@integer/google_play_services_version" />
-119-->[com.google.android.gms:play-services-basement:18.0.0] /Users/thanhson/.gradle/caches/transforms-3/19a0dfd4021b70333b258b23187eb758/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:23:13-66
-120    </application>
-121
-122</manifest>
+112-->[com.google.android.gms:play-services-auth:20.1.0] /Users/thanhson/.gradle/caches/transforms-3/8e3010740483d75c161f46936cb6df5f/transformed/jetified-play-services-auth-20.1.0/AndroidManifest.xml:23:9-27:75
+113            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+113-->[com.google.android.gms:play-services-auth:20.1.0] /Users/thanhson/.gradle/caches/transforms-3/8e3010740483d75c161f46936cb6df5f/transformed/jetified-play-services-auth-20.1.0/AndroidManifest.xml:24:13-93
+114            android:excludeFromRecents="true"
+114-->[com.google.android.gms:play-services-auth:20.1.0] /Users/thanhson/.gradle/caches/transforms-3/8e3010740483d75c161f46936cb6df5f/transformed/jetified-play-services-auth-20.1.0/AndroidManifest.xml:25:13-46
+115            android:exported="false"
+115-->[com.google.android.gms:play-services-auth:20.1.0] /Users/thanhson/.gradle/caches/transforms-3/8e3010740483d75c161f46936cb6df5f/transformed/jetified-play-services-auth-20.1.0/AndroidManifest.xml:26:13-37
+116            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+116-->[com.google.android.gms:play-services-auth:20.1.0] /Users/thanhson/.gradle/caches/transforms-3/8e3010740483d75c161f46936cb6df5f/transformed/jetified-play-services-auth-20.1.0/AndroidManifest.xml:27:13-72
+117        <!--
+118            Service handling Google Sign-In user revocation. For apps that do not integrate with
+119            Google Sign-In, this service will never be started.
+120        -->
+121        <service
+121-->[com.google.android.gms:play-services-auth:20.1.0] /Users/thanhson/.gradle/caches/transforms-3/8e3010740483d75c161f46936cb6df5f/transformed/jetified-play-services-auth-20.1.0/AndroidManifest.xml:33:9-37:51
+122            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+122-->[com.google.android.gms:play-services-auth:20.1.0] /Users/thanhson/.gradle/caches/transforms-3/8e3010740483d75c161f46936cb6df5f/transformed/jetified-play-services-auth-20.1.0/AndroidManifest.xml:34:13-89
+123            android:exported="true"
+123-->[com.google.android.gms:play-services-auth:20.1.0] /Users/thanhson/.gradle/caches/transforms-3/8e3010740483d75c161f46936cb6df5f/transformed/jetified-play-services-auth-20.1.0/AndroidManifest.xml:35:13-36
+124            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
+124-->[com.google.android.gms:play-services-auth:20.1.0] /Users/thanhson/.gradle/caches/transforms-3/8e3010740483d75c161f46936cb6df5f/transformed/jetified-play-services-auth-20.1.0/AndroidManifest.xml:36:13-107
+125            android:visibleToInstantApps="true" />
+125-->[com.google.android.gms:play-services-auth:20.1.0] /Users/thanhson/.gradle/caches/transforms-3/8e3010740483d75c161f46936cb6df5f/transformed/jetified-play-services-auth-20.1.0/AndroidManifest.xml:37:13-48
+126
+127        <activity
+127-->[com.google.android.gms:play-services-base:18.0.1] /Users/thanhson/.gradle/caches/transforms-3/19fea4fb28dedd992824e13cc158e7a1/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:9-22:45
+128            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+128-->[com.google.android.gms:play-services-base:18.0.1] /Users/thanhson/.gradle/caches/transforms-3/19fea4fb28dedd992824e13cc158e7a1/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:19-85
+129            android:exported="false"
+129-->[com.google.android.gms:play-services-base:18.0.1] /Users/thanhson/.gradle/caches/transforms-3/19fea4fb28dedd992824e13cc158e7a1/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:22:19-43
+130            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+130-->[com.google.android.gms:play-services-base:18.0.1] /Users/thanhson/.gradle/caches/transforms-3/19fea4fb28dedd992824e13cc158e7a1/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:21:19-78
+131
+132        <meta-data
+132-->[com.google.android.gms:play-services-basement:18.0.0] /Users/thanhson/.gradle/caches/transforms-3/19a0dfd4021b70333b258b23187eb758/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:21:9-23:69
+133            android:name="com.google.android.gms.version"
+133-->[com.google.android.gms:play-services-basement:18.0.0] /Users/thanhson/.gradle/caches/transforms-3/19a0dfd4021b70333b258b23187eb758/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:22:13-58
+134            android:value="@integer/google_play_services_version" />
+134-->[com.google.android.gms:play-services-basement:18.0.0] /Users/thanhson/.gradle/caches/transforms-3/19a0dfd4021b70333b258b23187eb758/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:23:13-66
+135    </application>
+136
+137</manifest>

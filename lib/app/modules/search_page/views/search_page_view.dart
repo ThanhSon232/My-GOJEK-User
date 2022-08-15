@@ -41,14 +41,14 @@ class SearchPageView extends GetView<SearchPageController> {
               ),
             ),
             bottom: PreferredSize(
-              preferredSize: Size.fromHeight(height * 0.25),
+              preferredSize: Size.fromHeight(height * 0.3),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                     margin: const EdgeInsets.all(10),
                     padding: const EdgeInsets.all(10),
-                    height: height * 0.17,
+                    height: height * 0.2,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),

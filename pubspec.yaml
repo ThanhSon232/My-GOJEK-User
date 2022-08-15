@@ -29,6 +29,8 @@ dependencies:
   ticket_widget: ^0.0.1
   firebase_database: ^9.0.19
   firebase_core: ^1.19.2
+  pinput: ^2.2.12
+  flutter_credit_card: ^3.0.3
 
 
 dev_dependencies: 
@@ -49,3 +51,4 @@ flutter:
     - assets/main_banner_2/
     - assets/setting_icons/
     - assets/vehicles/
+    - assets/vehicle_icons/

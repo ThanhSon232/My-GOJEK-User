@@ -150,10 +150,10 @@ class RegisterView extends GetView<RegisterController> {
               onPressed: () async{
                 var check =  await controller.check();
                 if(check == true){
-                  Get.toNamed(Routes.PASSWORD);
+                  Get.toNamed(Routes.OTP);
                 }
               },
-              child: Obx(()=>controller.isLoading.value ? const CircularProgressIndicator() : const Icon(
+              child: Obx(()=>controller.isLoading.value ? const CircularProgressIndicator(color: Colors.white,) : const Icon(
                   Icons.arrow_forward,
                   color: Colors.white,
                 ),
