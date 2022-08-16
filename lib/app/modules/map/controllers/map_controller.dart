@@ -37,6 +37,7 @@ class MapController extends GetxController {
   var selectedIndex = 0.obs;
   BitmapDescriptor? mapMarker;
   Voucher? voucher;
+  var groupValue = "CASH".obs;
 
   List<Vehicle> vehicleList = [
     Vehicle(
@@ -161,7 +162,7 @@ class MapController extends GetxController {
     var temp = await findTransportationController.map
         .getCurrentAddress(location?.lat!, location?.lng!);
     address.value =
-        "${temp.name} ${temp.subLocality} ${temp.subAdministrativeArea} ${temp.locality}  ${temp.country}";
+        "${temp.name}, ${temp.subLocality}, ${temp.subAdministrativeArea}, ${temp.locality},  ${temp.country}";
     location?.address = address.value;
   }
 
@@ -296,40 +297,11 @@ class MapController extends GetxController {
     EasyLoading.show();
     isLoading.value = true;
 
-    // await apiHandlerImp.put({
-    //   "startAddress": {
-    //     "address": from?.address,
-    //     "longitude": from?.lng,
-    //     "latitude": from?.lat
-    //   },
-    //   "destination": {
-    //     "address": to?.address,
-    //     "longitude": to?.lng,
-    //     "latitude": to?.lat
-    //   },
-    //   "vehicleAndPrice": {
-    //     "vehicleType": vehicleList[selectedIndex.value].type,
-    //     "price": vehicleList[selectedIndex.value].price
-    //   },
-    //   "createdTime":
-    //       DateFormat("yyyy-MM-dd HH:mm").format(DateTime.now().toLocal()),
-    //   "distanceAndTime": {
-    //     "distance": request["distance"],
-    //     "timeSecond": request["timeSecond"],
-    //   },
-    //   "discountId": "",
-    //   "note": ""
-    // }, "user/${userController.user!.id}/booking");
-    Random random = Random();
-    int randomNumber = random.nextInt(100);
-    isLoading.value = false;
-    EasyLoading.dismiss();
+    // Random random = Random();
+    // int randomNumber = random.nextInt(100);
 
-    await FirebaseDatabase.instance
-        .ref(
-            "${vehicleList[selectedIndex.value].type}/${double.parse(from!.lat!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/${double.parse(from!.lng!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/request")
-        .child(randomNumber.toString())
-        .set({
+
+    var response = await apiHandlerImp.put({
       "startAddress": {
         "address": from?.address,
         "longitude": from?.lng,
@@ -344,20 +316,23 @@ class MapController extends GetxController {
         "vehicleType": vehicleList[selectedIndex.value].type,
         "price": vehicleList[selectedIndex.value].price
       },
-      "user": userController.user!.toJson(),
+      "paymentType": groupValue.value,
       "createdTime":
           DateFormat("yyyy-MM-dd HH:mm").format(DateTime.now().toLocal()),
       "distanceAndTime": {
         "distance": request["distance"],
         "timeSecond": request["timeSecond"],
       },
-      "discountId": "",
-      "note": ""
-    });
+      "discountId": voucher?.discountId,
+      "note": null
+    }, "user/booking");
+    var path = response.data["data"].toString().split("/");
+    id = int.parse(path.last);
+
 
     listener = FirebaseDatabase.instance
         .ref(
-            "${vehicleList[selectedIndex.value].type}/${double.parse(from!.lat!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/${double.parse(from!.lng!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/request/${userController.user!.id.toString()}/")
+            response.data["data"])
         .child("driver")
         .limitToFirst(1)
         .onChildAdded
@@ -373,26 +348,29 @@ class MapController extends GetxController {
         status.value = STATUS.FOUND;
       }
     });
+    //
+    // listener1 = FirebaseDatabase.instance
+    //     .ref(
+    //         "${vehicleList[selectedIndex.value].type}/${double.parse(from!.lat!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/${double.parse(from!.lng!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/request/${userController.user!.id.toString()}/driver")
+    //     .onChildChanged
+    //     .listen((event) async {
+    //   if (event.snapshot.exists) {
+    //     var data = event.snapshot.value as Map;
+    //     if(to!.lat!.toStringAsFixed(3) ==  data["position"]["lat"].toStringAsFixed(3)  && to!.lng!.toStringAsFixed(3) == data["position"]["long"].toStringAsFixed(3) ){
+    //       Get.snackbar("Đã", "tới");
+    //       listener1!.cancel();
+    //     }
+    //     final Marker marker = Marker(
+    //         markerId: const MarkerId("3"),
+    //         icon: mapMarker!,
+    //         position:
+    //             LatLng(data["position"]["lat"], data["position"]["long"]));
+    //     markers[const MarkerId("3")] = marker;
+    //   }
+    // });
 
-    listener1 = FirebaseDatabase.instance
-        .ref(
-            "${vehicleList[selectedIndex.value].type}/${double.parse(from!.lat!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/${double.parse(from!.lng!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/request/${userController.user!.id.toString()}/driver")
-        .onChildChanged
-        .listen((event) async {
-      if (event.snapshot.exists) {
-        var data = event.snapshot.value as Map;
-        if(to!.lat!.toStringAsFixed(3) ==  data["position"]["lat"].toStringAsFixed(3)  && to!.lng!.toStringAsFixed(3) == data["position"]["long"].toStringAsFixed(3) ){
-          Get.snackbar("Đã", "tới");
-          listener1!.cancel();
-        }
-        final Marker marker = Marker(
-            markerId: const MarkerId("3"),
-            icon: mapMarker!,
-            position:
-                LatLng(data["position"]["lat"], data["position"]["long"]));
-        markers[const MarkerId("3")] = marker;
-      }
-    });
+    isLoading.value = false;
+    EasyLoading.dismiss();
   }
 
   Future<void> createMarker() async {
@@ -422,15 +400,15 @@ class MapController extends GetxController {
     isLoading.value = true;
 
     await apiHandlerImp.put({}, "user/cancelBooking/$id");
-
-    await FirebaseDatabase.instance
-        .ref(
-            "${vehicleList[selectedIndex.value].type}/${double.parse(from!.lat!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/${double.parse(from!.lng!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/request/${userController.user!.id.toString()}")
-        .remove();
-    isLoading.value = false;
-    status.value = STATUS.SELECTVEHICLE;
+    //
+    // await FirebaseDatabase.instance
+    //     .ref(
+    //         "${vehicleList[selectedIndex.value].type}/${double.parse(from!.lat!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/${double.parse(from!.lng!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/request/${userController.user!.id.toString()}")
+    //     .remove();
     listener!.cancel();
-    listener1!.cancel();
+    // listener1!.cancel();
+    status.value = STATUS.SELECTVEHICLE;
+    isLoading.value = false;
 
     EasyLoading.dismiss();
   }

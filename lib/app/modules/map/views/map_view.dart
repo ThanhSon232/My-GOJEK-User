@@ -4,9 +4,6 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:my_grab/app/data/common/bottom_sheets.dart';
 import 'package:my_grab/app/data/common/util.dart';
-
-import '../../../data/models/vehicle.dart';
-import '../../../routes/app_pages.dart';
 import '../controllers/map_controller.dart';
 
 class MapView extends GetView<MapController> {
@@ -407,7 +404,8 @@ class MapView extends GetView<MapController> {
                       ),
                       onTap: () async {
                         controller.selectedIndex.value = itemBuilder;
-                        await controller.route(controller.from, controller.to);
+
+                        // await controller.route(controller.from, controller.to);
                       },
                     ),
                   );
@@ -442,7 +440,7 @@ class MapView extends GetView<MapController> {
                 GestureDetector(
                   onTap: () {
                     showPaymentMethod(
-                        context: context, height: Get.height * 0.95);
+                        context: context, height: Get.height * 0.95, groupValue: controller.groupValue);
                   },
                   child: Row(
                     children: [
@@ -454,7 +452,7 @@ class MapView extends GetView<MapController> {
                         width: 5,
                       ),
                       Text(
-                        "Cash >",
+                      controller.groupValue.value,
                         style: textTheme.headline1!.copyWith(fontSize: 13),
                       ),
                       const SizedBox(
