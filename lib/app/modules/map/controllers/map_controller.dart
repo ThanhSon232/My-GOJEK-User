@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:math';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:intl/intl.dart';
 
 import 'package:firebase_database/firebase_database.dart';
@@ -18,6 +18,7 @@ import 'package:my_grab/app/modules/user/controllers/user_controller.dart';
 
 import '../../../data/common/network_handler.dart';
 import '../../../data/common/search_location.dart';
+import '../../../data/models/driver.dart';
 import '../../../data/models/voucher/voucher.dart';
 import '../../../routes/app_pages.dart';
 
@@ -90,6 +91,8 @@ class MapController extends GetxController {
   APIHandlerImp apiHandlerImp = APIHandlerImp();
 
   Map<dynamic, dynamic> request = {};
+
+  Driver? driver;
 
   StreamSubscription? listener;
   StreamSubscription? listener1;
@@ -300,7 +303,31 @@ class MapController extends GetxController {
     // Random random = Random();
     // int randomNumber = random.nextInt(100);
 
-
+    // print({
+    //   "startAddress": {
+    //     "address": from?.address,
+    //     "longitude": from?.lng,
+    //     "latitude": from?.lat
+    //   },
+    //   "destination": {
+    //     "address": to?.address,
+    //     "longitude": to?.lng,
+    //     "latitude": to?.lat
+    //   },
+    //   "vehicleAndPrice": {
+    //     "vehicleType": vehicleList[selectedIndex.value].type,
+    //     "price": vehicleList[selectedIndex.value].price
+    //   },
+    //   "paymentType": groupValue.value,
+    //   "createdTime":
+    //   DateFormat("yyyy-MM-dd HH:mm").format(DateTime.now().toLocal()),
+    //   "distanceAndTime": {
+    //     "distance": request["distance"],
+    //     "timeSecond": request["timeSecond"],
+    //   },
+    //   "discountId": voucher?.discountId,
+    //   "note": null
+    // });
     var response = await apiHandlerImp.put({
       "startAddress": {
         "address": from?.address,
@@ -326,48 +353,95 @@ class MapController extends GetxController {
       "discountId": voucher?.discountId,
       "note": null
     }, "user/booking");
-    var path = response.data["data"].toString().split("/");
-    id = int.parse(path.last);
 
-
-    listener = FirebaseDatabase.instance
-        .ref(
-            response.data["data"])
-        .child("driver")
-        .limitToFirst(1)
-        .onChildAdded
-        .listen((event) async {
-      if (event.snapshot.exists) {
-        var data = event.snapshot.value as Map;
-        final Marker marker = Marker(
-            markerId: const MarkerId("3"),
-            icon: mapMarker!,
-            position:
-                LatLng(data["position"]["lat"], data["position"]["long"]));
-        markers[const MarkerId("3")] = marker;
+    if (response.data["status"]) {
+      var path = response.data["data"].toString().split("/");
+      id = int.parse(path.last);
+      status.value = STATUS.FINDING;
+      listener = FirebaseDatabase.instance
+          .ref(response.data["data"])
+          .limitToFirst(1)
+          .onChildRemoved
+          .listen((event) async {
+        var response_2 = await apiHandlerImp
+            .get("user/getLinkAfterBooking/${id.toString()}", {});
+        var data = await FirebaseDatabase.instance
+            .ref(response_2.data["data"])
+            .child("DriverAccept")
+            .get();
+        driver = Driver.fromJson(data.value as Map);
         status.value = STATUS.FOUND;
-      }
-    });
-    //
-    // listener1 = FirebaseDatabase.instance
-    //     .ref(
-    //         "${vehicleList[selectedIndex.value].type}/${double.parse(from!.lat!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/${double.parse(from!.lng!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/request/${userController.user!.id.toString()}/driver")
-    //     .onChildChanged
-    //     .listen((event) async {
-    //   if (event.snapshot.exists) {
-    //     var data = event.snapshot.value as Map;
-    //     if(to!.lat!.toStringAsFixed(3) ==  data["position"]["lat"].toStringAsFixed(3)  && to!.lng!.toStringAsFixed(3) == data["position"]["long"].toStringAsFixed(3) ){
-    //       Get.snackbar("Đã", "tới");
-    //       listener1!.cancel();
-    //     }
-    //     final Marker marker = Marker(
-    //         markerId: const MarkerId("3"),
-    //         icon: mapMarker!,
-    //         position:
-    //             LatLng(data["position"]["lat"], data["position"]["long"]));
-    //     markers[const MarkerId("3")] = marker;
-    //   }
-    // });
+        listener?.cancel();
+        listener1 = FirebaseDatabase.instance
+            .ref(response_2.data["data"])
+            .onChildChanged
+            .listen((event) async {
+          if (event.snapshot.exists) {
+            var data = event.snapshot.value as Map;
+            if (to!.lat!.toStringAsFixed(3) ==
+                data["position"]["lat"].toStringAsFixed(3) &&
+                to!.lng!.toStringAsFixed(3) ==
+                    data["position"]["long"].toStringAsFixed(3)) {
+              Get.dialog(
+                  AlertDialog(
+
+                    title:
+                    const Center(child: Text('Rate your driver')),
+                    content: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const CircleAvatar(
+                          backgroundImage:
+                          AssetImage("assets/face.png"),
+                        ),
+                        const Text("Tran Van Tuan"),
+                        RatingBar.builder(
+                          initialRating: 0,
+                          minRating: 1,
+                          direction: Axis.horizontal,
+                          allowHalfRating: false,
+                          itemCount: 5,
+                          itemPadding: const EdgeInsets.symmetric(
+                              horizontal: 4.0),
+                          itemBuilder: (context, _) => const Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          onRatingUpdate: (rating) {
+                            print(rating);
+                          },
+                        ),
+                        TextFormField()
+                      ],
+                    ),
+                    actions: [
+                      Center(
+                        child: TextButton(
+                          child: const Text("Send"),
+                          onPressed: () => Get.back(),
+                        ),
+                      ),
+                    ],
+                  ),
+                  useSafeArea: true
+              );
+              listener1!.cancel();
+            }
+            final Marker marker = Marker(
+                markerId: const MarkerId("3"),
+                icon: mapMarker!,
+                position:
+                LatLng(
+                    data["position"]["lat"], data["position"]["long"]));
+            markers[const MarkerId("3")] = marker;
+          }
+        });
+      });
+    } else {
+      Get.snackbar("Order was failed", "Your balance is insufficient",
+          backgroundColor: Colors.grey[100]);
+    }
 
     isLoading.value = false;
     EasyLoading.dismiss();
@@ -418,7 +492,7 @@ class MapController extends GetxController {
     var vo = await Get.toNamed(Routes.VOUCHER, arguments: {"voucher": voucher});
 
     for (Vehicle v in vehicleList) {
-      if(v.priceAfterVoucher!=""){
+      if (v.priceAfterVoucher != "") {
         v.price = v.priceAfterVoucher;
         v.priceAfterVoucher = "";
       }

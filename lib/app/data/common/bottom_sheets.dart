@@ -52,7 +52,7 @@ void showPaymentMethod(
                 leading: const Icon(CupertinoIcons.creditcard_fill),
                 title: const Text("E-Wallet"),
                 trailing: Radio(
-                    value: "E-WALLET",
+                    value: "E_WALLET",
                     groupValue: groupValue.value,
                     onChanged: (value) {
                       groupValue.value = value.toString();

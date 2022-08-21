@@ -84,7 +84,7 @@ class UserView extends GetView<UserController> {
                           width: 20,
                         ))),
                     title: Text(
-                      controller.user!.fullName!,
+                      controller.user?.fullName ?? "",
                       style: textTheme.headline1,
                     ),
                     horizontalTitleGap: 10,
@@ -92,11 +92,11 @@ class UserView extends GetView<UserController> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          controller.user!.email!,
+                          controller.user?.email ?? "",
                           style: textTheme.headline2,
                         ),
                         Text(
-                          "+84${controller.user!.phoneNumber!}",
+                          "+84${controller.user?.phoneNumber ?? ""}",
                           style: textTheme.headline2,
                         )
                       ],
@@ -121,8 +121,8 @@ class UserView extends GetView<UserController> {
                         expiryDate: "",
                         cvvCode: "",
                         cardHolderName:
-                            "Balance ${controller.wallet!.balance!}",
-                        bankName: controller.user!.fullName!,
+                            "Balance ${controller.wallet?.balance ?? 0}",
+                        bankName: controller.user?.fullName ?? "",
                         isHolderNameVisible: true,
                         showBackView: false,
                         onCreditCardWidgetChange:

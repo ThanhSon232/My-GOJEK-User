@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -14,6 +16,7 @@ class MapView extends GetView<MapController> {
     final height = MediaQuery.of(context).size.height;
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
         body: Obx(
           () => GoogleMap(
             polylines: controller.polyline.toSet(),
@@ -160,7 +163,7 @@ class MapView extends GetView<MapController> {
                                   ),
                                 ),
                                 Text(
-                                  "Tran Thanh Son",
+                                  controller.driver?.fullname ?? "",
                                   style: textTheme.headline2!
                                       .copyWith(fontSize: 12),
                                 ),
@@ -168,21 +171,25 @@ class MapView extends GetView<MapController> {
                             ),
                             const Spacer(),
                             Column(
+                              mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.end,
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Text(
-                                  "60B3-123456",
+                                  controller.driver?.vehicleList?.first
+                                          .licensePlateNum ??
+                                      "",
                                   style: textTheme.headline1!
                                       .copyWith(fontSize: 16),
                                 ),
                                 Text(
-                                  "Sirius",
+                                  controller.driver?.vehicleList?.first.brand ??
+                                      "",
                                   style: textTheme.headline2!
                                       .copyWith(fontSize: 16),
                                 ),
                                 Text(
-                                  "0912357990",
+                                  controller.driver?.phone ?? "",
                                   style: textTheme.headline2!
                                       .copyWith(fontSize: 16),
                                 ),
@@ -197,7 +204,10 @@ class MapView extends GetView<MapController> {
                     width: Get.width,
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(primary: Colors.green),
-                        onPressed: () {},
+                        onPressed: () async {
+                          await FlutterPhoneDirectCaller.callNumber(
+                              controller.driver?.phone.toString() ?? "113");
+                        },
                         child: const Text("Call driver")),
                   )
                 ],
@@ -333,6 +343,7 @@ class MapView extends GetView<MapController> {
   Widget selectVehicle(
       {required BuildContext context, required TextTheme textTheme}) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Obx(
         () => controller.isLoading.value
             ? const Align(
@@ -432,6 +443,7 @@ class MapView extends GetView<MapController> {
               ),
             )),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
@@ -440,7 +452,9 @@ class MapView extends GetView<MapController> {
                 GestureDetector(
                   onTap: () {
                     showPaymentMethod(
-                        context: context, height: Get.height * 0.95, groupValue: controller.groupValue);
+                        context: context,
+                        height: Get.height * 0.95,
+                        groupValue: controller.groupValue);
                   },
                   child: Row(
                     children: [
@@ -452,7 +466,7 @@ class MapView extends GetView<MapController> {
                         width: 5,
                       ),
                       Text(
-                      controller.groupValue.value,
+                        controller.groupValue.value,
                         style: textTheme.headline1!.copyWith(fontSize: 13),
                       ),
                       const SizedBox(
@@ -490,11 +504,12 @@ class MapView extends GetView<MapController> {
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(primary: Colors.green),
                       onPressed: () async {
-                        controller.status.value = STATUS.FINDING;
+
                         await controller.bookingCar();
                       },
                       child: const Text("Order")),
-                )),
+                )
+            ),
           ],
         ),
       ),
