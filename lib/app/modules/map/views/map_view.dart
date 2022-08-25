@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -51,18 +50,19 @@ class MapView extends GetView<MapController> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Visibility(
-                    visible:
-                        controller.status.value != STATUS.FOUND ? true : false,
-                    child: roundedButton(
-                        icon: Icons.arrow_back,
-                        f: () {
-                          if (controller.status.value == STATUS.FINDING) {
-                            controller.handleBackButton();
-                          } else {
-                            Get.back();
-                          }
-                        }),
+                  Obx(() => Visibility(
+                      visible:
+                          controller.status.value != STATUS.FOUND ? true : false,
+                      child: roundedButton(
+                          icon: Icons.arrow_back,
+                          f: () {
+                            if (controller.status.value == STATUS.FINDING) {
+                              controller.handleBackButton();
+                            } else {
+                              Get.back();
+                            }
+                          }),
+                    ),
                   ),
                   roundedButton(
                       icon: Icons.navigation,

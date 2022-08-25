@@ -38,16 +38,21 @@ class PasswordLoginController extends GetxController {
 
   Future<void> login() async {
     isLoading.value = true;
+    var box = await Hive.openBox("box");
+    await box.clear();
     print(passwordController.text);
-
+    print({
+      "username": '0${loginController.phoneNumberController.text}',
+      "password": passwordController.text
+    });
     var response = await apiHandler.post({
       "username": '0${loginController.phoneNumberController.text}',
       "password": passwordController.text
     }, "user/login");
 
 
+
     if(response.data["status"]){
-      var box = await Hive.openBox("box");
       await box.put("notFirstTime", false);
       Get.offNamedUntil(Routes.HOME, ModalRoute.withName(Routes.HOME));
       apiHandler.storeToken(response.data["data"]);

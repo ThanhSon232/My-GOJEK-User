@@ -19,7 +19,7 @@ class UserEntityAdapter extends TypeAdapter<UserEntity> {
     return UserEntity(
       id: fields[0] as int?,
       homeAddress: fields[1] as String?,
-      gender: fields[2] as bool?,
+      gender: fields[2] as dynamic,
       phoneNumber: fields[3] as String?,
       email: fields[4] as String?,
       fullName: fields[5] as String?,
@@ -62,7 +62,7 @@ class UserEntityAdapter extends TypeAdapter<UserEntity> {
 UserEntity _$UserEntityFromJson(Map<String, dynamic> json) => UserEntity(
       id: json['id'] as int?,
       homeAddress: json['homeAddress'] as String?,
-      gender: json['gender'] as bool?,
+      gender: json['gender'],
       phoneNumber: json['phoneNumber'] as String?,
       email: json['email'] as String?,
       fullName: json['fullName'] as String?,

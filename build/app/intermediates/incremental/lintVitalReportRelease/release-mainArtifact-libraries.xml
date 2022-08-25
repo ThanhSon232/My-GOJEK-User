@@ -121,6 +121,19 @@
       externalAnnotations="annotations.zip"
       proguardRules="proguard.txt"/>
   <library
+      name="/Users/thanhson/Documents/GitHub/my_gojek/android@@:flutter_phone_direct_caller::release"
+      jars="/Users/thanhson/Documents/GitHub/my_gojek/build/flutter_phone_direct_caller/.transforms/0b2d6997ae6766f8db3d63a20ea9be85/transformed/out/jars/classes.jar"
+      resolved="com.yanisalfian.flutterphonedirectcaller:flutter_phone_direct_caller:unspecified"
+      folder="/Users/thanhson/Documents/GitHub/my_gojek/build/flutter_phone_direct_caller/.transforms/0b2d6997ae6766f8db3d63a20ea9be85/transformed/out"
+      manifest="AndroidManifest.xml"
+      resFolder="res"
+      assetsFolder="assets"
+      lintJar="lint.jar"
+      publicResources="public.txt"
+      symbolFile="R.txt"
+      externalAnnotations="annotations.zip"
+      proguardRules="proguard.txt"/>
+  <library
       name="io.flutter:flutter_embedding_release:1.0.0-caaafc5604ee9172293eb84a381be6aadd660317@jar"
       jars="/Users/thanhson/.gradle/caches/modules-2/files-2.1/io.flutter/flutter_embedding_release/1.0.0-caaafc5604ee9172293eb84a381be6aadd660317/9c0fb298ec35f3e747d9330c98e93919939493c9/flutter_embedding_release-1.0.0-caaafc5604ee9172293eb84a381be6aadd660317.jar"
       resolved="io.flutter:flutter_embedding_release:1.0.0-caaafc5604ee9172293eb84a381be6aadd660317"/>

@@ -10560,6 +10560,21 @@ com.it_nomads.fluttersecurestorage.ciphers.StorageCipher18Implementation:
     private static final int ivSize
     private static final int keySize
     public static void moveSecretFromPreferencesIfNeeded(android.content.SharedPreferences,android.content.Context)
+com.yanisalfian.flutterphonedirectcaller.BuildConfig
+com.yanisalfian.flutterphonedirectcaller.FlutterPhoneDirectCallerHandler:
+    private static final java.lang.String CALL_PHONE
+    private static final int CALL_REQ_CODE
+com.yanisalfian.flutterphonedirectcaller.R$attr
+com.yanisalfian.flutterphonedirectcaller.R$color
+com.yanisalfian.flutterphonedirectcaller.R$dimen
+com.yanisalfian.flutterphonedirectcaller.R$drawable
+com.yanisalfian.flutterphonedirectcaller.R$id
+com.yanisalfian.flutterphonedirectcaller.R$integer
+com.yanisalfian.flutterphonedirectcaller.R$layout
+com.yanisalfian.flutterphonedirectcaller.R$string
+com.yanisalfian.flutterphonedirectcaller.R$style
+com.yanisalfian.flutterphonedirectcaller.R$styleable
+com.yanisalfian.flutterphonedirectcaller.R
 fman.ge.smart_auth.AppSignatureHelper$Companion:
     public final java.lang.String getTAG()
 fman.ge.smart_auth.AppSignatureHelper:
@@ -14614,7 +14629,6 @@ kotlin.jvm.internal.RepeatableContainer
 kotlin.jvm.internal.ShortCompanionObject
 kotlin.jvm.internal.ShortSpreadBuilder
 kotlin.jvm.internal.SpreadBuilder
-kotlin.jvm.internal.StringCompanionObject
 kotlin.jvm.internal.TypeIntrinsics:
     public static java.util.Collection asMutableCollection(java.lang.Object)
     public static java.util.Collection asMutableCollection(java.lang.Object,java.lang.String)
@@ -15363,14 +15377,42 @@ kotlin.text.MatcherMatchResult$groupValues$1
 kotlin.text.MatcherMatchResult$groups$1$iterator$1
 kotlin.text.MatcherMatchResult$groups$1
 kotlin.text.MatcherMatchResult
-kotlin.text.Regex$Companion
+kotlin.text.Regex$Companion:
+    public static final synthetic int access$ensureUnicodeCase(kotlin.text.Regex$Companion,int)
+    private final int ensureUnicodeCase(int)
+    public final java.lang.String escape(java.lang.String)
+    public final java.lang.String escapeReplacement(java.lang.String)
+    public final kotlin.text.Regex fromLiteral(java.lang.String)
 kotlin.text.Regex$Serialized$Companion
 kotlin.text.Regex$Serialized
 kotlin.text.Regex$findAll$1
 kotlin.text.Regex$findAll$2
 kotlin.text.Regex$special$$inlined$fromInt$1
 kotlin.text.Regex$splitToSequence$1
-kotlin.text.Regex
+kotlin.text.Regex:
+    private java.util.Set _options
+    public void <init>(java.lang.String,java.util.Set)
+    public void <init>(java.lang.String,kotlin.text.RegexOption)
+    public static final synthetic java.util.regex.Pattern access$getNativePattern$p(kotlin.text.Regex)
+    public final boolean containsMatchIn(java.lang.CharSequence)
+    public final kotlin.text.MatchResult find(java.lang.CharSequence,int)
+    public static synthetic kotlin.text.MatchResult find$default(kotlin.text.Regex,java.lang.CharSequence,int,int,java.lang.Object)
+    public final kotlin.sequences.Sequence findAll(java.lang.CharSequence,int)
+    public static synthetic kotlin.sequences.Sequence findAll$default(kotlin.text.Regex,java.lang.CharSequence,int,int,java.lang.Object)
+    public final java.util.Set getOptions()
+    public final java.lang.String getPattern()
+    public final kotlin.text.MatchResult matchAt(java.lang.CharSequence,int)
+    public final kotlin.text.MatchResult matchEntire(java.lang.CharSequence)
+    public final boolean matches(java.lang.CharSequence)
+    public final boolean matchesAt(java.lang.CharSequence,int)
+    public final java.lang.String replace(java.lang.CharSequence,kotlin.jvm.functions.Function1)
+    public final java.lang.String replaceFirst(java.lang.CharSequence,java.lang.String)
+    public final java.util.List split(java.lang.CharSequence,int)
+    public static synthetic java.util.List split$default(kotlin.text.Regex,java.lang.CharSequence,int,int,java.lang.Object)
+    public final kotlin.sequences.Sequence splitToSequence(java.lang.CharSequence,int)
+    public static synthetic kotlin.sequences.Sequence splitToSequence$default(kotlin.text.Regex,java.lang.CharSequence,int,int,java.lang.Object)
+    public final java.util.regex.Pattern toPattern()
+    private final java.lang.Object writeReplace()
 kotlin.text.RegexKt$fromInt$1$1
 kotlin.text.RegexKt
 kotlin.text.RegexOption

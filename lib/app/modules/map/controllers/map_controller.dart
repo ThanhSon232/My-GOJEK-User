@@ -27,6 +27,8 @@ class MapController extends GetxController {
   var findTransportationController = Get.find<FindTransportationController>();
   var searchPageController = Get.find<SearchPageController>();
   var userController = Get.find<UserController>();
+  TextEditingController feedbackController = TextEditingController();
+  var star = 0;
   var address = ''.obs;
   late GoogleMapController googleMapController;
   var isLoading = false.obs;
@@ -299,35 +301,6 @@ class MapController extends GetxController {
   Future<void> bookingCar() async {
     EasyLoading.show();
     isLoading.value = true;
-
-    // Random random = Random();
-    // int randomNumber = random.nextInt(100);
-
-    // print({
-    //   "startAddress": {
-    //     "address": from?.address,
-    //     "longitude": from?.lng,
-    //     "latitude": from?.lat
-    //   },
-    //   "destination": {
-    //     "address": to?.address,
-    //     "longitude": to?.lng,
-    //     "latitude": to?.lat
-    //   },
-    //   "vehicleAndPrice": {
-    //     "vehicleType": vehicleList[selectedIndex.value].type,
-    //     "price": vehicleList[selectedIndex.value].price
-    //   },
-    //   "paymentType": groupValue.value,
-    //   "createdTime":
-    //   DateFormat("yyyy-MM-dd HH:mm").format(DateTime.now().toLocal()),
-    //   "distanceAndTime": {
-    //     "distance": request["distance"],
-    //     "timeSecond": request["timeSecond"],
-    //   },
-    //   "discountId": voucher?.discountId,
-    //   "note": null
-    // });
     var response = await apiHandlerImp.put({
       "startAddress": {
         "address": from?.address,
@@ -376,15 +349,16 @@ class MapController extends GetxController {
             .ref(response_2.data["data"])
             .onChildChanged
             .listen((event) async {
+              print(event.snapshot.value);
           if (event.snapshot.exists) {
             var data = event.snapshot.value as Map;
             if (to!.lat!.toStringAsFixed(3) ==
-                data["position"]["lat"].toStringAsFixed(3) &&
+                data["position"]["latitude"].toStringAsFixed(3) &&
                 to!.lng!.toStringAsFixed(3) ==
-                    data["position"]["long"].toStringAsFixed(3)) {
+                    data["position"]["longitude"].toStringAsFixed(3)) {
+              listener1!.cancel();
               Get.dialog(
                   AlertDialog(
-
                     title:
                     const Center(child: Text('Rate your driver')),
                     content: Column(
@@ -397,7 +371,7 @@ class MapController extends GetxController {
                         ),
                         const Text("Tran Van Tuan"),
                         RatingBar.builder(
-                          initialRating: 0,
+                          initialRating: 1,
                           minRating: 1,
                           direction: Axis.horizontal,
                           allowHalfRating: false,
@@ -409,31 +383,46 @@ class MapController extends GetxController {
                             color: Colors.amber,
                           ),
                           onRatingUpdate: (rating) {
-                            print(rating);
+                            // star = rating as int;
+                            // print(rating);
                           },
                         ),
-                        TextFormField()
+                        TextFormField(
+                          controller: feedbackController,
+                        )
                       ],
                     ),
                     actions: [
                       Center(
                         child: TextButton(
                           child: const Text("Send"),
-                          onPressed: () => Get.back(),
+                          onPressed: () async{
+                            print({
+                              "rateStar": "FIVE",
+                              "note": feedbackController.text
+                            });
+                            await apiHandlerImp.post({
+                              "rateStar": "FIVE",
+                              "note": feedbackController.text
+                            }, "user/feedback");
+                          },
                         ),
                       ),
                     ],
                   ),
                   useSafeArea: true
-              );
-              listener1!.cancel();
+              ).then((value){
+                Future.delayed(const Duration(milliseconds: 1500),(){
+                  Get.back();
+                });
+              });
             }
             final Marker marker = Marker(
                 markerId: const MarkerId("3"),
                 icon: mapMarker!,
                 position:
                 LatLng(
-                    data["position"]["lat"], data["position"]["long"]));
+                    data["position"]["latitude"], data["position"]["longitude"]));
             markers[const MarkerId("3")] = marker;
           }
         });
@@ -445,6 +434,23 @@ class MapController extends GetxController {
 
     isLoading.value = false;
     EasyLoading.dismiss();
+  }
+
+  String getRate(int i){
+    switch(i){
+      case 1:
+        return "ONE";
+      case 2:
+        return "TWO";
+      case 3:
+        return "THREE";
+      case 4:
+        return "FOUR";
+      case 5:
+        return "FIVE";
+      default:
+        return "";
+    }
   }
 
   Future<void> createMarker() async {
@@ -474,13 +480,7 @@ class MapController extends GetxController {
     isLoading.value = true;
 
     await apiHandlerImp.put({}, "user/cancelBooking/$id");
-    //
-    // await FirebaseDatabase.instance
-    //     .ref(
-    //         "${vehicleList[selectedIndex.value].type}/${double.parse(from!.lat!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/${double.parse(from!.lng!.toString()).toStringAsFixed(2).replaceFirst(".", ",")}/request/${userController.user!.id.toString()}")
-    //     .remove();
     listener!.cancel();
-    // listener1!.cancel();
     status.value = STATUS.SELECTVEHICLE;
     isLoading.value = false;
 

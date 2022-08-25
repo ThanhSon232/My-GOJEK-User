@@ -10,7 +10,7 @@ class UserEntity extends HiveObject{
   @HiveField(1)
   String? homeAddress;
   @HiveField(2)
-  bool? gender;
+  dynamic gender;
   @HiveField(3)
   String? phoneNumber;
   @HiveField(4)

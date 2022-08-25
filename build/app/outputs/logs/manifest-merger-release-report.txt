@@ -58,6 +58,7 @@ MERGED from [:geocoding] /Users/thanhson/Documents/GitHub/my_gojek/build/geocodi
 MERGED from [:path_provider_android] /Users/thanhson/Documents/GitHub/my_gojek/build/path_provider_android/intermediates/merged_manifest/release/AndroidManifest.xml:2:1-9:12
 MERGED from [:smart_auth] /Users/thanhson/Documents/GitHub/my_gojek/build/smart_auth/intermediates/merged_manifest/release/AndroidManifest.xml:2:1-9:12
 MERGED from [:flutter_secure_storage] /Users/thanhson/Documents/GitHub/my_gojek/build/flutter_secure_storage/intermediates/merged_manifest/release/AndroidManifest.xml:2:1-11:12
+MERGED from [:flutter_phone_direct_caller] /Users/thanhson/Documents/GitHub/my_gojek/build/flutter_phone_direct_caller/intermediates/merged_manifest/release/AndroidManifest.xml:2:1-15:12
 MERGED from [androidx.window:window-java:1.0.0-beta04] /Users/thanhson/.gradle/caches/transforms-3/e1f5bf00836c889852a9a2014464d260/transformed/jetified-window-java-1.0.0-beta04/AndroidManifest.xml:17:1-23:12
 MERGED from [androidx.window:window:1.0.0-beta04] /Users/thanhson/.gradle/caches/transforms-3/542a859793ec57d6a4d40865c7efc6d9/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:17:1-33:12
 MERGED from [androidx.multidex:multidex:2.0.0] /Users/thanhson/.gradle/caches/transforms-3/60455f47848b88c03b916134aaa9223d/transformed/multidex-2.0.0/AndroidManifest.xml:17:1-22:12
@@ -143,6 +144,8 @@ MERGED from [:smart_auth] /Users/thanhson/Documents/GitHub/my_gojek/build/smart_
 MERGED from [:smart_auth] /Users/thanhson/Documents/GitHub/my_gojek/build/smart_auth/intermediates/merged_manifest/release/AndroidManifest.xml:5:5-7:41
 MERGED from [:flutter_secure_storage] /Users/thanhson/Documents/GitHub/my_gojek/build/flutter_secure_storage/intermediates/merged_manifest/release/AndroidManifest.xml:6:5-9:53
 MERGED from [:flutter_secure_storage] /Users/thanhson/Documents/GitHub/my_gojek/build/flutter_secure_storage/intermediates/merged_manifest/release/AndroidManifest.xml:6:5-9:53
+MERGED from [:flutter_phone_direct_caller] /Users/thanhson/Documents/GitHub/my_gojek/build/flutter_phone_direct_caller/intermediates/merged_manifest/release/AndroidManifest.xml:5:5-7:41
+MERGED from [:flutter_phone_direct_caller] /Users/thanhson/Documents/GitHub/my_gojek/build/flutter_phone_direct_caller/intermediates/merged_manifest/release/AndroidManifest.xml:5:5-7:41
 MERGED from [androidx.window:window-java:1.0.0-beta04] /Users/thanhson/.gradle/caches/transforms-3/e1f5bf00836c889852a9a2014464d260/transformed/jetified-window-java-1.0.0-beta04/AndroidManifest.xml:19:5-21:41
 MERGED from [androidx.window:window-java:1.0.0-beta04] /Users/thanhson/.gradle/caches/transforms-3/e1f5bf00836c889852a9a2014464d260/transformed/jetified-window-java-1.0.0-beta04/AndroidManifest.xml:19:5-21:41
 MERGED from [androidx.window:window:1.0.0-beta04] /Users/thanhson/.gradle/caches/transforms-3/542a859793ec57d6a4d40865c7efc6d9/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:20:5-22:41
@@ -309,6 +312,16 @@ ADDED from [:geolocator_android] /Users/thanhson/Documents/GitHub/my_gojek/build
 		ADDED from [:geolocator_android] /Users/thanhson/Documents/GitHub/my_gojek/build/geolocator_android/intermediates/merged_manifest/release/AndroidManifest.xml:16:13-53
 	android:name
 		ADDED from [:geolocator_android] /Users/thanhson/Documents/GitHub/my_gojek/build/geolocator_android/intermediates/merged_manifest/release/AndroidManifest.xml:13:13-77
+uses-permission#android.permission.CALL_PHONE
+ADDED from [:flutter_phone_direct_caller] /Users/thanhson/Documents/GitHub/my_gojek/build/flutter_phone_direct_caller/intermediates/merged_manifest/release/AndroidManifest.xml:9:5-69
+	android:name
+		ADDED from [:flutter_phone_direct_caller] /Users/thanhson/Documents/GitHub/my_gojek/build/flutter_phone_direct_caller/intermediates/merged_manifest/release/AndroidManifest.xml:9:22-66
+uses-feature#android.hardware.telephony
+ADDED from [:flutter_phone_direct_caller] /Users/thanhson/Documents/GitHub/my_gojek/build/flutter_phone_direct_caller/intermediates/merged_manifest/release/AndroidManifest.xml:11:5-13:36
+	android:required
+		ADDED from [:flutter_phone_direct_caller] /Users/thanhson/Documents/GitHub/my_gojek/build/flutter_phone_direct_caller/intermediates/merged_manifest/release/AndroidManifest.xml:13:9-33
+	android:name
+		ADDED from [:flutter_phone_direct_caller] /Users/thanhson/Documents/GitHub/my_gojek/build/flutter_phone_direct_caller/intermediates/merged_manifest/release/AndroidManifest.xml:12:9-50
 uses-library#androidx.window.extensions
 ADDED from [androidx.window:window:1.0.0-beta04] /Users/thanhson/.gradle/caches/transforms-3/542a859793ec57d6a4d40865c7efc6d9/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:25:9-27:40
 	android:required
