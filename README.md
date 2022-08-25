@@ -33,6 +33,6 @@ I handled validators for all fields in login, if the input is wrong, it will sho
 
 <a href="https://ibb.co/TKWRBhR"><img src="https://i.ibb.co/6vXbRsb/Screen-Shot-2022-08-26-at-00-10-32.png" alt="Screen-Shot-2022-08-26-at-00-10-32" border="0"></a>
 
-5. I don't know what this screen is called, but i also did effect as analogous as the Gojek app:
-![Alt text](https://im4.ezgif.com/tmp/ezgif-4-3a4891abfc.gif "Gojek")
+<!-- 5. I don't know what this screen is called, but i also did effect as analogous as the Gojek app:
 
+![Alt text](https://im.ezgif.com/tmp/ezgif-1-732d42bf51.gif) -->
