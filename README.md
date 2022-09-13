@@ -1,6 +1,7 @@
 # My Grab
 
-This is my project built when I started learning flutter. The purpose of this project is simulating the process of booking a vehicle on an app.
+This is my project built when I started learning flutter. The purpose of this project is simulating the process of booking a vehicle on an app. You may be curious about the project's name, let's me explain it real quick.
+I tried to replicate Gojek as analogous as possible, I wanted to challenge myself and also learn something while doing this project, so don't be confused about the app or anything, there are no tutorial videos about cloning this app, therefore, I did everything by myself.
 
 ## Things you should know about my project:
 Flutter: 3.0.1
