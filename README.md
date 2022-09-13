@@ -21,3 +21,7 @@ API:
 6. Use a promotion for a trip
 6. Rate a driver
 
+## Demo:
+This video includes the user-side app and the driver-side app.
+https://drive.google.com/file/d/1GeNl7khEDwWMYomT7rZB1FEqrKMYodMn/view?usp=sharing
+
